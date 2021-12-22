@@ -1,19 +1,22 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
+import App from '../App.vue'
 import Axios from 'axios'
 
-const axiosInstance = Axios.create({
+const app = createApp(App)
+
+const axios = Axios.create({
     withCredentials: true
 })
 
 // 通过拦截器处理csrf问题，这里的正则和匹配下标可能需要根据实际情况小改动
-axiosInstance.interceptors.request.use((config) => {
+axios.interceptors.request.use((config) => {
     config.headers['X-Requested-With'] = 'XMLHttpRequest'
     const regex = /.*csrftoken=([^;.]*).*$/
     config.headers['X-CSRFToken'] = document.cookie.match(regex) === null ? null : document.cookie.match(regex)[1]
     return config
 })
 
-axiosInstance.interceptors.response.use(
+axios.interceptors.response.use(
     response => {
         return response
     },
@@ -22,6 +25,6 @@ axiosInstance.interceptors.response.use(
     }
 )
 
-Vue.prototype.axios = axiosInstance
+app.config.globalProperties.axios = axios
 
-export default axiosInstance
+export default axios

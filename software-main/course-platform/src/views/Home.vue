@@ -30,12 +30,12 @@
 
 
 <script>
+import { getUser } from "../api/api";
 export default {
   name: "Home",
   data() {
     return {
       userType: "",
-      type: ["student", "teacher"],
       loginForm: {
         username: "",
         password: "",
@@ -60,13 +60,9 @@ export default {
   },
   methods: {
     handleLogin() {
-      const i = Math.floor(Math.random() * 2);
-      this.userType = this.type[i];
-      if (this.userType == "student") {
-        this.$router.push("/student");
-      } else if (this.userType == "teacher") {
-        this.$router.push("/teacher");
-      }
+      getUser().then((res) => {
+        console.warn(res);
+      });
     },
   },
 };
