@@ -1,0 +1,79 @@
+<template>
+  <div id="login">
+    <el-form :model="loginForm" ref="loginForm" :rules="loginRules">
+      <h2>登录</h2>
+      <el-form-item prop="username">
+        <el-input
+          v-model="loginForm.username"
+          name="username"
+          placeholder="请输入用户名/手机号"
+          auto-complete="on"
+        ></el-input>
+      </el-form-item>
+
+      <el-form-item>
+        <el-input
+          v-model="loginForm.password"
+          name="password"
+          placeholder="请输入密码"
+          auto-complete="on"
+          prop="password"
+        ></el-input>
+      </el-form-item>
+
+      <el-form-item>
+        <el-button type="primary" @click="handleLogin">登录</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
+</template>
+
+
+<script>
+export default {
+  name: "Home",
+  data() {
+    return {
+      userType: "",
+      type: ["student", "teacher"],
+      loginForm: {
+        username: "",
+        password: "",
+      },
+      loginRules: {
+        username: [
+          {
+            required: true,
+            message: "请输入用户名",
+            trigger: "blur",
+          },
+        ],
+        password: [
+          {
+            required: true,
+            message: "请输入密码",
+            trigger: "blur",
+          },
+        ],
+      },
+    };
+  },
+  methods: {
+    handleLogin() {
+      const i = Math.floor(Math.random() * 2);
+      this.userType = this.type[i];
+      if (this.userType == "student") {
+        this.$router.push("/student");
+      } else if (this.userType == "teacher") {
+        this.$router.push("/teacher");
+      }
+    },
+  },
+};
+</script>
+
+<style scoped>
+.el-input {
+  width: 300px;
+}
+</style>
