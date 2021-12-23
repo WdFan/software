@@ -1,6 +1,6 @@
 <template>
   <div id="login">
-    <el-form :model="loginForm" ref="loginForm" :rules="loginRules">
+    <el-form :model="loginForm" ref="loginForm">
       <h2>登录</h2>
       <el-form-item prop="username">
         <el-input
@@ -40,28 +40,14 @@ export default {
         username: "",
         password: "",
       },
-      loginRules: {
-        username: [
-          {
-            required: true,
-            message: "请输入用户名",
-            trigger: "blur",
-          },
-        ],
-        password: [
-          {
-            required: true,
-            message: "请输入密码",
-            trigger: "blur",
-          },
-        ],
-      },
     };
   },
   methods: {
     handleLogin() {
       getUser().then((res) => {
-        console.warn(res);
+        console.log(res.data);
+        this.loginForm.username = res.data[0].userName;
+        this.loginForm.password = res.data[0].passWord;
       });
     },
   },
