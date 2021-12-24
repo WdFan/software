@@ -19,9 +19,10 @@ class LoginView(APIView):
         password = info['password']
         user = loginUser.objects.filter(userName=username).first()
         if user and password==user.passWord:
-            return Response({'msg': '登录成功', 'code': 200, 'username': username})
+            user_info = {'username': username,'user_type':user.type}
+            return Response({'msg': '登录成功', 'code': 200, 'user_info': user_info})
         else:
-            return Response({'msg': '登录失败', 'code': 400})
+            return Response({'msg': '登录失败，账号或密码错误！', 'code': 400})
 #登陆接口
 class RegisterView(APIView):
     def post(self,request):
@@ -34,9 +35,10 @@ class RegisterView(APIView):
         #password = request.POST.get('password')
         #user_type = request.POST.get('user_type')
         user = loginUser.objects.filter(userName=username).first()
+        user_info = {'username': username,'user_type':user_type}
         if user:
-            return Response({'msg': '注册失败', 'code': 400, 'username': username,'password':password,'user_type':user_type})
+            return Response({'msg': '注册失败，用户已存在', 'code': 400, 'user_info': user_info})
         else:
             user = loginUser(userName=username,passWord=password,type=user_type)
             user.save()
-            return Response({'msg': '注册成功', 'code': 200, 'username': username,'password': password,'user_type':user_type})
+            return Response({'msg': '注册成功', 'code': 200, 'user_info': user_info})

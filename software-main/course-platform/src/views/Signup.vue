@@ -1,6 +1,5 @@
 <template>
   <div id="signup">
-    <h1>Sign up</h1>
     <el-form :model="signupForm" ref="signupForm">
       <h2>注册</h2>
       <el-form-item prop="username">
@@ -16,6 +15,15 @@
           v-model="signupForm.password"
           name="password"
           placeholder="请输入密码"
+          show-password
+        ></el-input>
+      </el-form-item>
+
+      <el-form-item>
+        <el-input
+          v-model="signupForm.repassword"
+          name="password"
+          placeholder="再次确认密码"
           show-password
         ></el-input>
       </el-form-item>
@@ -38,6 +46,7 @@ export default {
       signupForm: {
         username: "",
         password: "",
+        repassword: ""
       },
     };
   },

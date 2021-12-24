@@ -1,6 +1,5 @@
 <template>
   <div id="login">
-    <h1>Login</h1>
     <el-form :model="loginForm" ref="loginForm">
       <h2>登录</h2>
       <el-form-item prop="username">
@@ -31,7 +30,8 @@
 
 
 <script>
-import {getUser, login} from "../api/api";
+import {login} from "@/api/api";
+import { ElMessage } from "element-plus";
 export default {
   name: "Login",
   data() {
@@ -46,12 +46,17 @@ export default {
   methods: {
     handleLogin() {
       const {username, password} = this.loginForm;
-      console.log(username);
-      getUser().then(res => {
-        console.log(res)
-      })
       login(username, password).then((res) => {
         console.log(res);
+        if (res.data.code == 200) {
+          const user_info = res.data.user_info;
+          sessionStorage.setItem("is_login", true);
+          sessionStorage.setItem("user_info", JSON.stringify(user_info));
+          ElMessage.success(res.data.msg);
+          this.$router.push('/home')
+        } else {
+          ElMessage.error(res.data.msg)
+        }
       })
     },
     jumpSignup() {
