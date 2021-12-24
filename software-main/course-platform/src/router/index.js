@@ -37,7 +37,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const isLogin = sessionStorage.getItem('is_login');
   if (isLogin) {
-    if (to.path !== '/Login')
+    if (to.path !== '/Login' && to.path !== '/signup')
       next();
     else
       next('/home')

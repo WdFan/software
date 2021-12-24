@@ -2,30 +2,34 @@
   <div id="signup">
     <el-form :model="signupForm" ref="signupForm">
       <h2>注册</h2>
-      <el-form-item prop="username">
+      <el-form-item label="用户名">
         <el-input
           v-model="signupForm.username"
-          name="username"
           placeholder="请输入用户名"
         ></el-input>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item label="密码">
         <el-input
           v-model="signupForm.password"
-          name="password"
           placeholder="请输入密码"
           show-password
         ></el-input>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item label="确认密码">
         <el-input
           v-model="signupForm.repassword"
-          name="password"
-          placeholder="再次确认密码"
+          placeholder="再次输入密码"
           show-password
         ></el-input>
+      </el-form-item>
+
+      <el-form-item label="用户类型">
+        <el-radio-group v-model="signupForm.user_type">
+          <el-radio label="student">学生</el-radio>
+          <el-radio label="teacher">教师</el-radio>
+        </el-radio-group>
       </el-form-item>
 
       <el-form-item>
@@ -37,7 +41,8 @@
 
 
 <script>
-import { getUser, login } from "../api/api";
+import { signup } from "@/api/api";
+import { ElMessage } from "element-plus";
 export default {
   name: "Signup",
   data() {
@@ -46,25 +51,25 @@ export default {
       signupForm: {
         username: "",
         password: "",
-        repassword: ""
+        repassword: "",
+        user_type: "",
       },
     };
   },
   methods: {
     handleSignup() {
-      getUser().then((res) => {
-        console.log(res.data);
-        this.signupForm.username = res.data[0].userName;
-        this.signupForm.password = res.data[0].passWord;
+      signup(this.signupForm).then(res => {
+        if (res.data.code == 200) {
+          const user_info = res.data.user_info;
+          sessionStorage.setItem("is_login", true);
+          sessionStorage.setItem("user_info", JSON.stringify(user_info));
+          ElMessage.success(res.data.msg);
+          this.$router.push('/home')
+        } else {
+          ElMessage.error(res.data.msg)
+        }
       });
-
-      login("zzzzzzzzz", "zzzzz").then((res) => {
-        console.log(res);
-      })
     },
-    jumpSignup() {
-      this.$router.push('/signup');
-    }
   },
 };
 </script>
