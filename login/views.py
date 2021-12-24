@@ -4,7 +4,7 @@ from login.models import loginUser
 from login.serializer import loginUserserializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-import bcrypt
+import json
 from django.contrib.auth.hashers import check_password,make_password
 # Create your views here.
 class loginUserViewSet(viewsets.ModelViewSet):
@@ -13,8 +13,10 @@ class loginUserViewSet(viewsets.ModelViewSet):
 
 class LoginView(APIView):
     def post(self,request):
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        postBody = request.body
+        info = json.loads(postBody)
+        username = info['username']
+        password = info['password']
         user = loginUser.objects.filter(userName=username).first()
         if user and password==user.passWord:
             return Response({'msg': '登录成功', 'code': 200, 'user_id': user.id})
