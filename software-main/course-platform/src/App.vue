@@ -1,5 +1,4 @@
 <template>
-  <img src="./assets/logo.png" />
   <router-view></router-view>
 </template>
 
