@@ -61,8 +61,8 @@ export default {
       signup(this.signupForm).then(res => {
         if (res.data.code == 200) {
           const user_info = res.data.user_info;
-          sessionStorage.setItem("is_login", true);
-          sessionStorage.setItem("user_info", JSON.stringify(user_info));
+          localStorage.setItem("is_login", true);
+          localStorage.setItem("user_info", JSON.stringify(user_info));
           ElMessage.success(res.data.msg);
           this.$router.push('/home')
         } else {

@@ -1,5 +1,5 @@
 <template>
   <div class="index">
-    <h1>index</h1>
+    <h1>student</h1>
   </div>
 </template>

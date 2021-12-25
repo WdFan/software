@@ -17,12 +17,12 @@ export default {
   },
   methods: {
     jumpLogin() {
-      this.$router.push("/Login");
+      this.$router.push("/login");
     },
     logout() {
-      sessionStorage.clear();
+      localStorage.clear();
       ElMessage.success("注销成功！");
-      this.$router.push("/Login");
+      this.$router.push("/login");
     },
   },
 };

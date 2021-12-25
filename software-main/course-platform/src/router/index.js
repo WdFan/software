@@ -18,12 +18,27 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: () => import('../views/Home/index.vue'),
+    component: () => import('../views/Home/Home.vue'),
     children: [
       {
         path: '/home/index',
         name: 'index',
         component: () => import("../views/Home/index/index.vue")
+      },
+      {
+        path: '/home/personal',
+        name: 'personal',
+        component: () => import("../views/Home/index/personal.vue")
+      },
+      {
+        path: '/home/studentLog',
+        name: 'studentLog',
+        component: () => import("../views/Home/index/studentLog.vue")
+      },
+      {
+        path: '/home/teacherLog',
+        name: 'teacherLog',
+        component: () => import("../views/Home/index/teacherLog.vue")
       }
     ]
   },
@@ -35,15 +50,15 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isLogin = sessionStorage.getItem('is_login');
+  const isLogin = localStorage.getItem('is_login');
   if (isLogin) {
-    if (to.path !== '/Login' && to.path !== '/signup')
+    if (to.path !== '/login' && to.path !== '/signup')
       next();
     else
       next('/home')
   } else {
-    if (to.path !== '/Login' && to.path !== '/signup')
-      next('/Login');
+    if (to.path !== '/login' && to.path !== '/signup')
+      next('/login');
     else
       next();
   }
