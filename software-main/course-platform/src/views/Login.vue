@@ -46,7 +46,7 @@
             </el-form>
             <div class="sign-link">
               <el-button type="text" @click="jumpSignup()"
-                >注册新用户</el-button
+                >注册新账号</el-button
               >
             </div>
           </div>
