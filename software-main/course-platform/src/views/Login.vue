@@ -1,38 +1,68 @@
 <template>
-  <div class="login-wrap">
-    <div class="ms-login">
-      <div class="ms-title">账号登录</div>
-      <el-form :model="loginForm" :rules="rules" ref="login" class="ms-content">
-        <el-form-item prop="username">
-          <el-input v-model="loginForm.username" placeholder="用户名">
-          </el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input
-            type="password"
-            placeholder="密码"
-            v-model="loginForm.password"
+  <div class="login_page">
+    <el-container>
+      <el-header>
+        <el-button class="logo" @click="this.$router.go(0)">
+          <el-image
+            :src="require('@/assets/img/logo.png')"
+            style="width: 20px; height: 20px"
+            alt="logo"
           >
-          </el-input>
-        </el-form-item>
-        <div class="login-btn">
-          <el-button type="primary" @click="handleLogin()">登 录</el-button>
+          </el-image>
+        </el-button>
+      </el-header>
+      <el-main>
+        <div class="login-wrap">
+          <div class="ms-login">
+            <div class="ms-title">账号登录</div>
+            <el-form
+              :model="loginForm"
+              :rules="rules"
+              ref="login"
+              class="ms-content"
+            >
+              <el-form-item prop="username">
+                <el-input
+                  v-model="loginForm.username"
+                  placeholder="用户名"
+                  clearable
+                >
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="password">
+                <el-input
+                  type="password"
+                  placeholder="密码"
+                  v-model="loginForm.password"
+                  clearable
+                >
+                </el-input>
+              </el-form-item>
+              <div class="login-btn">
+                <el-button type="primary" @click="handleLogin()"
+                  >登 录</el-button
+                >
+              </div>
+            </el-form>
+            <div class="sign-link">
+              <el-button type="text" @click="jumpSignup()"
+                >注册新用户</el-button
+              >
+            </div>
+          </div>
+          <div class="login-pics">
+            <div class="login-pics-pict"></div>
+            <div class="login-pics-txt">
+              <p>到头来，</p>
+              <p>我们记住的，</p>
+              <p>不是敌人的攻击，</p>
+              <p>而是朋友的沉默。</p>
+              <p>——马丁·路德·金</p>
+            </div>
+          </div>
         </div>
-      </el-form>
-      <div class="sign-link">
-        <el-button type="text" @click="jumpSignup()">注册新用户</el-button>
-      </div>
-    </div>
-    <div class="login-pics">
-      <div class="login-pics-pict"></div>
-      <div class="login-pics-txt">
-        <p>到头来，</p>
-        <p>我们记住的，</p>
-        <p>不是敌人的攻击，</p>
-        <p>而是朋友的沉默。</p>
-        <p>——马丁·路德·金</p>
-      </div>
-    </div>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
@@ -80,9 +110,34 @@ export default {
 </script>
 
 <style scoped>
+.login_page,
+.el-container {
+  height: 100%;
+}
+
+.logo {
+  text-align: center;
+  color: #fff;
+  font-size: 28px;
+  background: #249ce1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  margin-top: 10px;
+  margin-left: 40px;
+}
+.el-header {
+  height: 60px;
+  background: #eff4fa;
+  border-bottom: 1px solid #d6dfea;
+}
+
 .login-wrap {
   width: 960px;
-  margin: 150px auto 32px auto;
+  margin: 45px auto;
   padding: 0 24px;
   min-height: 500px;
 }
@@ -106,7 +161,7 @@ export default {
   top: 0;
   height: 400px;
   background-repeat: no-repeat;
-  background-position: right 40px;
+  background-position: right center;
   background-image: url("../assets/img/tg-smile.jpg");
 }
 .ms-title {
