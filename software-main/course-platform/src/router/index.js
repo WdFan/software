@@ -3,7 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/home/index'
   },
   {
     path: '/login',
@@ -17,7 +17,7 @@ const routes = [
   },
   {
     path: '/home',
-    name: 'home',
+    redirect: '/home/index',
     component: () => import('../views/Home/Home.vue'),
     children: [
       {
@@ -55,7 +55,7 @@ router.beforeEach((to, from, next) => {
     if (to.path !== '/login' && to.path !== '/signup')
       next();
     else
-      next('/home')
+      next('/home/index')
   } else {
     if (to.path !== '/login' && to.path !== '/signup')
       next('/login');
