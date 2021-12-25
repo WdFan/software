@@ -15,6 +15,7 @@
         <div class="main">
           <el-form :model="signupForm" ref="signupForm">
             <div class="welcome">欢迎注册</div>
+            <div class="header">每一天，乐在沟通。</div>
             <el-form-item>
               <el-input
                 v-model="signupForm.username"
@@ -131,9 +132,16 @@ export default {
   margin-bottom: 20px;
 }
 
+.header {
+  font-size: 28px;
+  margin-bottom: 64px;
+  line-height: 1.2;
+  color: #333;
+}
+
 .welcome {
   font-size: 44px;
-  margin-bottom: 84px;
+  margin-bottom: 20px;
 }
 
 .el-input {
@@ -150,5 +158,9 @@ export default {
   height: 60px;
   font-size: 24px;
   font-weight: lighter;
+}
+
+>>> .el-input__suffix {
+  font-size: 30px;
 }
 </style>
