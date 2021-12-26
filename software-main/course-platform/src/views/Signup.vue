@@ -5,51 +5,53 @@
         <el-button class="logo" @click="this.$router.go(0)">
           <el-image
             :src="require('@/assets/img/logo.png')"
-            style="width: 20px; height: 20px"
+            style="width: 25px; height: 25px"
             alt="logo"
           >
           </el-image>
         </el-button>
       </el-header>
       <el-main>
-        <div class="main">
-          <el-form :model="signupForm" ref="signupForm">
-            <div class="welcome">欢迎注册</div>
-            <div class="header">每一天，乐在沟通。</div>
-            <el-form-item>
-              <el-input
-                v-model="signupForm.username"
-                placeholder="用户名"
-                clearable
-              ></el-input>
-            </el-form-item>
+        <el-scrollbar style="width: 100%">
+          <div class="main">
+            <el-form :model="signupForm" ref="signupForm">
+              <div class="welcome">欢迎注册</div>
+              <div class="header">每一天，乐在沟通。</div>
+              <el-form-item>
+                <el-input
+                  v-model="signupForm.username"
+                  placeholder="用户名"
+                  clearable
+                ></el-input>
+              </el-form-item>
 
-            <el-form-item>
-              <el-input
-                v-model="signupForm.password"
-                type="password"
-                placeholder="密码"
-              ></el-input>
-            </el-form-item>
+              <el-form-item>
+                <el-input
+                  v-model="signupForm.password"
+                  type="password"
+                  placeholder="密码"
+                ></el-input>
+              </el-form-item>
 
-            <el-form-item>
-              <el-input
-                v-model="signupForm.repassword"
-                type="password"
-                placeholder="确认密码"
-              ></el-input>
-            </el-form-item>
+              <el-form-item>
+                <el-input
+                  v-model="signupForm.repassword"
+                  type="password"
+                  placeholder="确认密码"
+                ></el-input>
+              </el-form-item>
 
-            <el-form-item>
-              <el-button
-                class="signup_button"
-                type="primary"
-                @click="handleSignup"
-                >立即注册</el-button
-              >
-            </el-form-item>
-          </el-form>
-        </div>
+              <el-form-item>
+                <el-button
+                  class="signup_button"
+                  type="primary"
+                  @click="handleSignup"
+                  >立即注册</el-button
+                >
+              </el-form-item>
+            </el-form>
+          </div>
+        </el-scrollbar>
       </el-main>
     </el-container>
   </div>
@@ -98,16 +100,16 @@ export default {
 .logo {
   text-align: center;
   color: #fff;
-  font-size: 28px;
+  font-size: 40px;
   background: #249ce1;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
-  width: 40px;
+  height: 50px;
+  width: 50px;
   border-radius: 50%;
-  margin-top: 10px;
-  margin-left: 40px;
+  margin-top: 5px;
+  margin-left: 20px;
 }
 
 .el-header {

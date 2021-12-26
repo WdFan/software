@@ -4,12 +4,12 @@
       <el-aside>
         <el-scrollbar style="width: 100%">
           <el-menu default-active="2" :collapse="true" @select="menuAction">
-            <el-submenu index="1">
+            <el-submenu index="1" style="padding: 20px 0 0">
               <template #title>
                 <el-icon :size="25"><user /></el-icon
                 ><span>用户</span></template
               >
-              <el-menu-item-group class="submenu">
+              <el-menu-item-group>
                 <template #title
                   ><span>{{ username }}</span></template
                 >
@@ -91,6 +91,7 @@ export default {
   background-color: #fff;
   color: var(--el-text-color-primary);
   text-align: center;
+  padding: 0;
 }
 
 .el-menu--collapse {
@@ -116,5 +117,11 @@ export default {
 >>> .el-menu-item-group__title {
   font-size: 15px;
   padding: 7px 20px;
+}
+
+>>> .el-tabs__active-bar {
+  margin-bottom: 2px;
+  height: 4px;
+  max-width: 34px;
 }
 </style>
