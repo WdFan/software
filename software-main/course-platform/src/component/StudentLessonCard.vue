@@ -12,6 +12,7 @@
           >
           <span
             >
+            <el-icon color="#fff" :size="20"><home-filled /></el-icon>
             <span class="className">{{ className }}</span></span
           >
         </div>

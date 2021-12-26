@@ -33,6 +33,7 @@ a {
   justify-content: space-between;
   position: relative;
   z-index: 12;
+  box-sizing: border-box;
 }
 
 .index .el-tabs .el-tabs__header {
