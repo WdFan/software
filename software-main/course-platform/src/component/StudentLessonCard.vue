@@ -10,9 +10,8 @@
           <span class="avatorContainer">
             <span class="teacherName">{{ teacherName }}</span></span
           >
-          <span
-            >
-            <el-icon color="#fff" :size="20"><home-filled /></el-icon>
+          <span>
+            <el-icon color="#fff" :size="18"><home-filled /></el-icon>
             <span class="className">{{ className }}</span></span
           >
         </div>
@@ -100,19 +99,19 @@ export default {
   flex: 1;
 }
 
-.student-lesson-card .box-card>div .left .top h1 {
-    font-weight: 500;
-    text-align: left;
-    font-size: 20px;
-    word-break: break-all;
-    word-wrap: break-word;
-    line-height: 23px;
-    max-height: 46px;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
+.student-lesson-card .box-card > div .left .top h1 {
+  font-weight: 500;
+  text-align: left;
+  font-size: 20px;
+  word-break: break-all;
+  word-wrap: break-word;
+  line-height: 23px;
+  max-height: 46px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
 }
 
 .left {
@@ -167,34 +166,35 @@ export default {
   align-items: center;
 }
 
-.student-lesson-card .box-card>div .left .bottom>span {
-    font-size: 14px;
+.student-lesson-card .box-card > div .left .bottom > span {
+  font-size: 14px;
 }
 
-.student-lesson-card .box-card>div .left .bottom>span:last-child {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    width: 60%;
-    text-align: left;
-    margin-left: 20px;
+.student-lesson-card .box-card > div .left .bottom > span:last-child {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  width: 60%;
+  text-align: left;
+  margin-left: 20px;
 }
 
-.student-lesson-card .box-card>div .left .bottom .className, .lesson-cardS .box-card>div .left .bottom .teacherName {
-    overflow: hidden;
-    width: 100%;
-    text-align: left;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-left: 5px;
+.student-lesson-card .box-card > div .left .bottom .className,
+.lesson-cardS .box-card > div .left .bottom .teacherName {
+  overflow: hidden;
+  width: 100%;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: 5px;
 }
 
 .student-lesson-card .mark img {
-    display: block;
-    height: 100%;
+  display: block;
+  height: 100%;
 }
 
 .student-lesson-card .box-card.style0 {
