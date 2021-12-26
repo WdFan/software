@@ -42,10 +42,10 @@ class createBanjiView(APIView):
 #得到所交的班级
 class getbanjiListView(APIView):
     def post(self,request):
-        postBody = request.body
-        info = json.loads(postBody)
-        username = info['username']
-        #username = self.request.data['username']
+        #postBody = request.body
+        #info = json.loads(postBody)
+        #username = info['username']
+        username = self.request.data['username']
         #找到该用户所教的所有课程
         courses = course.objects.filter(teacher=username)
         #找到后根据课程找到所有班级
