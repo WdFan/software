@@ -53,16 +53,28 @@ class getbanjiListView(APIView):
             return {'message': '该用户未创建课程'}
         dict = OrderedDict()
         i = 0
+        course_id =[]
+        dict1 = OrderedDict()
+
+
         for c in courses:
+            course_id.append(c.id)
             #找到所有的banji对象
             banjis = c.banji.all()
             #创建序列化器
+            serializer = banjiserializer(banjis,many=True)
+            dict1[i]=serializer.data
+            i = i+1
+            '''
             for banji in banjis:
                 serializer = banjiserializer(banji)
                 d2 = serializer.data
                 dict[i] = d2
                 i =i+1
-        return Response(dict)
+            '''
+
+
+        return Response(dict1)
 
 
 
