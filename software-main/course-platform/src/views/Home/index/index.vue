@@ -5,22 +5,26 @@
       <el-tab-pane label="我听的课" name="study">
         <el-row>
           <el-col :span="6" class="studentCol">
-            <student-lesson-card style-str="style1" class-name="1班" course-name="英美文学鉴赏" teacher-name="周博"></student-lesson-card>
+            <student-lesson-card
+              style-str="style1"
+              class-name="1班"
+              course-name="英美文学鉴赏"
+              teacher-name="周博"
+            ></student-lesson-card>
           </el-col>
         </el-row>
-        
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
-import StudentLessonCard from '@/component/StudentLessonCard.vue'
+import StudentLessonCard from "@/component/StudentLessonCard.vue";
 export default {
   components: { StudentLessonCard },
   name: "index",
   component: {
-    StudentLessonCard
+    StudentLessonCard,
   },
   data() {
     return {
@@ -53,7 +57,8 @@ export default {
 }
 
 .studentCol {
-    margin-bottom: 30px;
-    padding: 0 20px;
+  margin-bottom: 30px;
+  padding: 0 20px;
 }
+
 </style>

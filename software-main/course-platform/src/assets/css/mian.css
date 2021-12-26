@@ -35,3 +35,10 @@ a {
   z-index: 12;
 }
 
+.index .el-tabs .el-tabs__header {
+  margin: 0;
+}
+
+.index .el-tabs .el-tabs__content {
+  padding: 40px 40px 0px 40px;
+}

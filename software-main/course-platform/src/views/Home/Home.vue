@@ -47,13 +47,13 @@ export default {
   },
   data() {
     return {
-      username: "fanwendi",
+      username: this.$store.state.user_info.username,
     };
   },
   methods: {
     logout() {
       this.$store.commit('clearUser');
-      ElMessage.success("注销成功！");
+      ElMessage.success("退出成功！");
       this.$router.push("/login");
     },
     menuAction(index) {
