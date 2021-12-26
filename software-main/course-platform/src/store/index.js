@@ -20,6 +20,7 @@ export default createStore({
     clearUser(state) {
       state.user_info = {};
       state.is_login = false;
+      state.home_index_tab = "teach"
       localStorage.clear();
     }
   },

@@ -17,7 +17,7 @@ export default {
   },
   watch: {
     tabActiveName() {
-      this.$store.commit('updateTab', this.tabActiveName)
+      this.$store.commit("updateTab", this.tabActiveName);
     },
   },
   methods: {},
@@ -37,6 +37,6 @@ export default {
 }
 
 >>> .el-tabs__item.is-active {
-  color: #4F95F5;
+  color: #4f95f5;
 }
 </style>

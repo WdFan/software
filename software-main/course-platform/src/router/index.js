@@ -17,6 +17,7 @@ const routes = [
   },
   {
     path: '/home',
+    name: 'home',
     redirect: '/home/index',
     component: () => import('../views/Home/Home.vue'),
     children: [
@@ -42,6 +43,11 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/:pathMatch(.*)*',
+    name: '404',
+    component: () => import("../views/ErrorPage.vue")
+  }
 ]
 
 const router = createRouter({
@@ -52,15 +58,15 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const isLogin = localStorage.getItem('is_login');
   if (isLogin) {
-    if (to.path !== '/login' && to.path !== '/signup')
-      next();
+    if (to.path == '/login' || to.path == '/signup')
+      next('/home/index');
     else
-      next('/home/index')
+      next();
   } else {
-    if (to.path !== '/login' && to.path !== '/signup')
-      next('/login');
-    else
+    if (to.path == '/login' || to.path == '/signup')
       next();
+    else
+      next('/login');
   }
 });
 
