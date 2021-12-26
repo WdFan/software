@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.clear();
+      this.$store.commit('clearUser');
       ElMessage.success("注销成功！");
       this.$router.push("/login");
     },

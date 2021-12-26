@@ -12,12 +12,12 @@ export default {
   name: "index",
   data() {
     return {
-      tabActiveName: "teach",
+      tabActiveName: this.$store.state.home_index_tab,
     };
   },
   watch: {
     tabActiveName() {
-      console.log(this.tabActiveName);
+      this.$store.commit('updateTab', this.tabActiveName)
     },
   },
   methods: {},
