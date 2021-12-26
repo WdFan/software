@@ -15,6 +15,13 @@
         </el-row>
       </el-tab-pane>
     </el-tabs>
+
+    <div class="headerButtonGroup">
+      <span>加入班级</span>
+      <span
+        ><el-icon :size="14"><plus /></el-icon>创建课程</span
+      >
+    </div>
   </div>
 </template>
 
@@ -61,4 +68,37 @@ export default {
   padding: 0 20px;
 }
 
+.index .headerButtonGroup {
+  color: #9b9b9b;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: fixed;
+  top: 0px;
+  right: 45px;
+  z-index: 1000;
+}
+
+.index .headerButtonGroup span {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  height: 54px;
+  line-height: 54px;
+  cursor: pointer;
+  padding-left: 20px;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.index .headerButtonGroup span:hover {
+  color: #4f95f5;
+}
 </style>
