@@ -43,3 +43,10 @@ a {
 .index .el-tabs .el-tabs__content {
   padding: 40px 40px 0px 40px;
 }
+
+.el-dropdown__popper {
+  --el-dropdown-menu-box-shadow: var(--el-box-shadow-light);
+  --el-dropdown-menuItem-hover-fill: var(--el-color-primary-light-9);
+  --el-dropdown-menuItem-hover-color: var(--el-color-primary-light-2);
+  --el-dropdown-menu-index: 10;
+}

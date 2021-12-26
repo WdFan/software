@@ -20,8 +20,8 @@
         <el-dropdown
           ><el-icon color="#fff" :size="22"><more-filled /></el-icon>
           <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item>退出</el-dropdown-item>
+            <el-dropdown-menu style="padding: 5px 0;">
+              <el-dropdown-item @click="logoutClass()">退出</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -45,6 +45,11 @@ export default {
   data() {
     return {};
   },
+  methods: {
+    logoutClass() {
+      console.warn('logOut');
+    }
+  }
 };
 </script>
 
@@ -240,4 +245,13 @@ export default {
   );
   background-image: linear-gradient(to bottom right, #4762f3, #5cc3ff);
 }
+
+.student-lesson-card .box-card > div .right .el-dropdown {
+  top: -5px;
+  z-index: 9;
+}
+
+
+
+
 </style>

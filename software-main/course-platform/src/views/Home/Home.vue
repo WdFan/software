@@ -11,7 +11,7 @@
               >
               <el-menu-item-group>
                 <template #title
-                  ><span>{{ username }}</span></template
+                  ><span class="userInfoPopover">你好，{{ username }}</span></template
                 >
                 <el-menu-item index="1-1" class="subitem1"
                   >个人中心</el-menu-item
@@ -47,7 +47,7 @@ export default {
   },
   data() {
     return {
-      username: this.$store.state.user_info.username,
+      username: this.$store.state.user_info.stu_name,
     };
   },
   methods: {
@@ -123,5 +123,13 @@ export default {
   margin-bottom: 2px;
   height: 4px;
   max-width: 34px;
+}
+
+.userInfoPopover {
+    padding: 8px 0;
+    text-align: center;
+    font-size: 14px;
+    line-height: 18px;
+    color: #9b9b9b;
 }
 </style>
