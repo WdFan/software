@@ -28,6 +28,7 @@ class banji(models.Model):
     #学生
     color =  models.CharField(max_length=50,blank=True)
     #student = models.ForeignKey(loginUser,null=True,blank=True,on_delete=models.CASCADE,related_name='banji')
+    num = models.IntegerField(blank=True,null=True)
     def __str__(self):
         return self.name
 
