@@ -41,3 +41,30 @@ class RegisterView(APIView):
             user = loginUser(username=username,password=password)
             user.save()
             return Response({'msg': '注册成功', 'code': 200, 'user_info': user_info})
+
+class addStuInfoView(APIView):
+    def post(self,request):
+        postBody = request.body
+        info = json.loads(postBody)
+        username = info['username']
+        stu_id = info['stu_id']
+        stu_name = info['stu_name']
+        stu_school = info['stu_school']
+
+        #username = self.request.data['username']
+        #stu_id = self.request.data['stu_id']
+        #stu_name =self.request.data['stu_name']
+        #stu_school =self.request.data['stu_school']
+        user = loginUser.objects.filter(username=username).first()
+        if user and user.stu_name is None:
+            user.stu_id = stu_id
+            user.stu_name = stu_name
+            user.stu_school = stu_school
+            user.save()
+            serializer = loginUserserializer(user)
+            return Response(serializer.data)
+        else:
+            return Response({'msg':'错误信息'})
+
+
+
