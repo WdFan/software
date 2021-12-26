@@ -26,6 +26,7 @@ class banji(models.Model):
     #课程
     course = models.ForeignKey(course,null=True,blank=True,on_delete=models.CASCADE,related_name='banji')
     #学生
+    color =  models.CharField(max_length=50,blank=True)
     #student = models.ForeignKey(loginUser,null=True,blank=True,on_delete=models.CASCADE,related_name='banji')
     def __str__(self):
         return self.name
