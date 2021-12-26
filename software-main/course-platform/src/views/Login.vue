@@ -68,7 +68,7 @@
 
 
 <script>
-import { login } from "@/api/api";
+import api from "@/api/api";
 import { ElMessage } from "element-plus";
 export default {
   name: "Login",
@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     handleLogin() {
-      login(this.loginForm).then((res) => {
+      api.login(this.loginForm).then((res) => {
         console.log(res);
         if (res.data.code == 200) {
           const user_info = res.data.user_info;

@@ -1,7 +1,9 @@
 import axios from './index'
 
-export const getUser = () => { return axios.get('/api/loginUser/') }
+const api = {
+    getUser: () => { return axios.get('/api/loginUser/') },
+    login: (user_info) => { return axios.post('/api/login/', user_info) },
+    signup: (user_info) => { return axios.post('/api/register/', user_info)},
+}
 
-export const login = (user_info) => { return axios.post('/api/login/', user_info) }
-
-export const signup = (user_info) => { return axios.post('/api/register/', user_info)}
+export default api;

@@ -59,7 +59,7 @@
 
 
 <script>
-import { signup } from "@/api/api";
+import api from "@/api/api";
 import { ElMessage } from "element-plus";
 export default {
   name: "Signup",
@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     handleSignup() {
-      signup(this.signupForm).then((res) => {
+      api.signup(this.signupForm).then((res) => {
         if (res.data.code == 200) {
           const user_info = res.data.user_info;
           this.$store.commit('updateUser', user_info)
