@@ -13,14 +13,17 @@ class loginUserViewSet(viewsets.ModelViewSet):
 
 class LoginView(APIView):
     def post(self,request):
-        postBody = request.body
-        info = json.loads(postBody)
-        username = info['username']
-        password = info['password']
+        #postBody = request.body
+        #info = json.loads(postBody)
+        #username = info['username']
+        #password = info['password']
+        username = self.request.data['username']
+        password = self.request.data['password']
+
         user = loginUser.objects.filter(username=username).first()
         if user and password==user.password:
-            user_info = {'username': username}
-            return Response({'msg': '登录成功', 'code': 200, 'user_info': user_info})
+            seializer = loginUserserializer(user)
+            return Response({'msg': '登录成功', 'code': 200, 'user_info': seializer.data})
         else:
             return Response({'msg': '登录失败，账号或密码错误！', 'code': 400})
 #登陆接口
@@ -44,17 +47,16 @@ class RegisterView(APIView):
 
 class addStuInfoView(APIView):
     def post(self,request):
-        postBody = request.body
-        info = json.loads(postBody)
-        username = info['username']
-        stu_id = info['stu_id']
-        stu_name = info['stu_name']
-        stu_school = info['stu_school']
-
-        #username = self.request.data['username']
-        #stu_id = self.request.data['stu_id']
-        #stu_name =self.request.data['stu_name']
-        #stu_school =self.request.data['stu_school']
+        #postBody = request.body
+        #info = json.loads(postBody)
+        #username = info['username']
+        #stu_id = info['stu_id']
+        #stu_name = info['stu_name']
+        #stu_school = info['stu_school']
+        username = self.request.data['username']
+        stu_id = self.request.data['stu_id']
+        stu_name =self.request.data['stu_name']
+        stu_school =self.request.data['stu_school']
         user = loginUser.objects.filter(username=username).first()
         if user and user.stu_name is None:
             user.stu_id = stu_id

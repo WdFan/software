@@ -4,4 +4,5 @@ from login.models import loginUser
 class loginUserserializer(serializers.ModelSerializer):
     class Meta:
         model = loginUser
-        fields ='__all__'
+        fields = ['username','stu_id','stu_name','stu_school']
+
