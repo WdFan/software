@@ -2,7 +2,7 @@
   <div class="signup_page">
     <el-container>
       <el-header>
-        <el-button class="logo" @click="this.$router.go(0)">
+        <el-button class="logo" @click="this.$router.push('/login')">
           <el-image
             :src="require('@/assets/img/logo.png')"
             style="width: 25px; height: 25px"

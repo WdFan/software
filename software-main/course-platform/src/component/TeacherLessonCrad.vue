@@ -7,10 +7,11 @@
         </div>
         <div class="bottom">
           <span class="avatorContainer">
+            <el-icon color="#fff" :size="16"><user /></el-icon>
             <span class="teacherName">{{ classData.num }}</span></span
           >
           <span>
-            <el-icon color="#fff" :size="18"><calendar /></el-icon>
+            <el-icon color="#fff" :size="16"><calendar /></el-icon>
             <span class="className">{{ classData.year + classData.season }}</span></span
           >
         </div>

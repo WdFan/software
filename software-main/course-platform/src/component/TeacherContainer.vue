@@ -2,7 +2,7 @@
   <div class="teacherContainer">
     <el-row>
       <el-col class="layoutHeader" :xs="8" :sm="8" :md="8" :lg="8" :xl="6">
-        <h3>{{ lessonData[0].course.name }}</h3>
+        <h3>{{ lessonData.name }}</h3>
         <div class="buttonGroup">
           <el-tooltip content="编辑"
             ><el-icon :size="18" color="#9b9b9b"><edit /></el-icon
@@ -19,21 +19,26 @@
     <div class="TCardGroup">
       <el-row style="margin-left: -20px; margin-right: -20px" :gutter="40">
         <el-col
-          
+          v-for="classdata in lessonData.banji"
+          :key="classdata.id"
           class="teacherCol"
           :xs="8"
           :sm="8"
           :md="8"
           :lg="8"
           :xl="6"
-        ></el-col>
+        >
+          <teacher-lesson-crad :class-data="classdata"></teacher-lesson-crad>
+        </el-col>
       </el-row>
     </div>
   </div>
 </template>
 
 <script>
+import TeacherLessonCrad from "./TeacherLessonCrad.vue";
 export default {
+  components: { TeacherLessonCrad },
   name: "TeacherContainer",
   props: {
     lessonData: Object,
