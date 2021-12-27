@@ -129,3 +129,55 @@ a {
 .specialDialog.joinClassDialog .el-dialog__body {
   padding: 18px 30px 30px !important;
 }
+
+.specialDialog .dialog-header {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.specialDialog .el-dialog__body {
+  padding: 40px;
+}
+
+.specialDialog .dialog-body .commonForm .el-form-item .el-form-item__label {
+  line-height: 1;
+}
+
+.specialDialog .dialog-body .commonForm .el-form-item .el-form-item__label>div {
+  margin-bottom: 10px;
+}
+
+.specialDialog .dialog-body .commonForm .el-form-item .el-form-item__label>div .name {
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+.specialDialog .dialog-body .commonForm .el-form-item .el-form-item__label>div .fill {
+  font-size: 14px;
+  color: #FFA134;
+}
+
+.specialDialog .dialog-body .commonForm .el-form-item.is-error .el-form-item__label>div span:not(.name) {
+  color: #f84f41;
+}
+
+.specialDialog .dialog-body .commonForm .el-form-item .el-form-item__content {
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+}
+
+.specialDialog .dialog-body .commonForm .el-form-item .el-form-item__label>div .NoFill {
+  font-size: 14px;
+  color: #9b9b9b;
+}

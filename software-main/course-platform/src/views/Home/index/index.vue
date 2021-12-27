@@ -18,7 +18,7 @@
 
     <div class="headerButtonGroup">
       <span @click="joinClass = true">加入班级</span>
-      <span
+      <span @click="createLesson = true"
         ><el-icon :size="14"><plus /></el-icon>创建课程</span
       >
     </div>
@@ -36,7 +36,7 @@
             <el-input
               type="text"
               :maxlength="6"
-              autofocus="true"
+              :autofocus="true"
               v-model="joinClassForm.classId"
               @input="joinClassChange"
             ></el-input>
@@ -46,24 +46,62 @@
           </div>
         </el-form>
         <div class="flexbox buttonGroup">
+          <button class="cancel" @click="closeClassDialog">取消</button>
           <button
-            class="cancel"
-            @click="
-              joinClass = false;
-              joinClassForm.classId = null;
-              diabledAddButton = 'disabled';
-            "
-          >
-            取消
-          </button>
-          <button
-            :disabled="diabledAddButton"
+            :disabled="addClassButton"
             class="addButton"
             @click="studentJoinClass"
           >
             确认
           </button>
         </div>
+      </div>
+    </el-dialog>
+
+    <el-dialog
+      v-model="createLesson"
+      width="350px"
+      top="calc(50vh - 143px)"
+      custom-class="specialDialog createLessonDialog editLessonDialog"
+    >
+      <template #title>
+        <span class="dialog-header"
+          ><span>创建课程</span>
+          <span @click="closeCreateLessonDialog">取消</span></span
+        >
+      </template>
+
+      <div class="dialog-body">
+        <el-form :model="createLessonForm" class="commonForm">
+          <el-form-item>
+            <template #label
+              ><div>
+                <span class="name">课程名称</span>
+                <span class="fill">必填</span>
+              </div></template
+            >
+            <el-input
+              @input="createLessonChange"
+              v-model="createLessonForm.lessonName"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <template #label
+              ><div>
+                <span class="name">课程简介</span>
+                <span class="NoFill">选填</span>
+              </div></template
+            >
+            <el-input v-model="createLessonForm.lessonSimpleName"></el-input>
+          </el-form-item>
+        </el-form>
+        <button
+          :disabled="createLessonButton"
+          @click="doCreateLesson"
+          class="createButton"
+        >
+          确认
+        </button>
       </div>
     </el-dialog>
   </div>
@@ -81,10 +119,16 @@ export default {
     return {
       tabActiveName: this.$store.state.home_index_tab,
       joinClass: false,
+      createLesson: false,
       joinClassForm: {
         classId: null,
       },
-      diabledAddButton: "disabled",
+      createLessonForm: {
+        lessonName: null,
+        lessonSimpleName: null,
+      },
+      addClassButton: "disabled",
+      createLessonButton: "disabled",
     };
   },
   watch: {
@@ -95,13 +139,36 @@ export default {
   methods: {
     joinClassChange(value) {
       if (value && value.length > 0) {
-        this.diabledAddButton = null;
+        this.addClassButton = null;
       } else {
-        this.diabledAddButton = "disabled";
+        this.addClassButton = "disabled";
       }
     },
     studentJoinClass() {
       console.warn(this.joinClassForm.classId);
+      this.closeClassDialog();
+    },
+    closeClassDialog() {
+      this.joinClass = false;
+      this.joinClassForm.classId = null;
+      this.addClassButton = "disabled";
+    },
+    closeCreateLessonDialog() {
+      this.createLesson = false;
+      this.createLessonForm.lessonName = null;
+      this.createLessonForm.lessonSimpleName = null;
+      this.createLessonButton = "disabled";
+    },
+    createLessonChange(value) {
+      if (value && value.length > 0) {
+        this.createLessonButton = null;
+      } else {
+        this.createLessonButton = "disabled";
+      }
+    },
+    doCreateLesson() {
+      console.warn(this.createLessonForm);
+      this.closeCreateLessonDialog();
     },
   },
 };
@@ -242,5 +309,58 @@ export default {
   background: #fff;
   color: #5096f5;
   border: 1px solid #5096f5;
+}
+
+.specialDialog .dialog-header span:first-child {
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+}
+
+.specialDialog .dialog-header span:last-child {
+  font-size: 14px;
+  color: #4f95f5;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.specialDialog.createLessonDialog .dialog-body .createButton:disabled {
+  color: #9b9b9b;
+  background-color: #ddd;
+}
+
+.specialDialog.createLessonDialog .dialog-body .createButton {
+  margin-top: 40px;
+  width: 200px;
+  height: 40px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  background-color: #4f95f5;
+  font-weight: 500;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+}
+
+.specialDialog .dialog-body .commonForm .el-form-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+
+.specialDialog .dialog-body .commonForm .el-form-item:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.specialDialog .dialog-body .commonForm .el-form-item:last-child {
+  margin-bottom: 0;
 }
 </style>
