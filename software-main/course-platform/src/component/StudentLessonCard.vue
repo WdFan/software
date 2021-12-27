@@ -1,5 +1,5 @@
 <template>
-  <div class="student-lesson-card">
+  <div class="lesson-card">
     <el-card :class="'box-card ' + styleStr" shadow="hover">
       <div class="left">
         <div class="top">
@@ -69,7 +69,7 @@ export default {
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
-.student-lesson-card {
+.lesson-card {
   width: 100%;
   height: 142px;
   position: relative;
@@ -78,7 +78,7 @@ export default {
   transition: all 0.3s;
 }
 
-.student-lesson-card:hover {
+.lesson-card:hover {
   width: 100%;
   -webkit-box-shadow: rgba(0, 0, 0, 0.15) 0 2px 10px 0;
   box-shadow: rgba(0, 0, 0, 0.15) 0 2px 10px 0;
@@ -87,7 +87,7 @@ export default {
   cursor: pointer;
 }
 
-.student-lesson-card .box-card > div .left {
+.lesson-card .box-card > div .left {
   max-width: calc(100% - 60px);
   display: -webkit-box;
   display: -ms-flexbox;
@@ -104,7 +104,7 @@ export default {
   flex: 1;
 }
 
-.student-lesson-card .box-card > div .left .top h1 {
+.lesson-card .box-card > div .left .top h1 {
   font-weight: 500;
   text-align: left;
   font-size: 20px;
@@ -123,21 +123,21 @@ export default {
   text-align: left;
 }
 
-.student-lesson-card .box-card {
+.lesson-card .box-card {
   width: 100%;
   height: 100%;
   color: #fff;
   border: none;
 }
 
-.student-lesson-card .box-card > div .right {
+.lesson-card .box-card > div .right {
   min-width: 60px;
   text-align: right;
   font-size: 20px;
   max-height: 40px;
 }
 
-.student-lesson-card .mark {
+.lesson-card .mark {
   position: absolute;
   top: 0;
   right: 0;
@@ -145,7 +145,7 @@ export default {
   z-index: 5;
 }
 
-.student-lesson-card .box-card > div .left .bottom {
+.lesson-card .box-card > div .left .bottom {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -156,7 +156,7 @@ export default {
   white-space: nowrap;
 }
 
-.student-lesson-card .box-card > div .left .bottom .avatorContainer {
+.lesson-card .box-card > div .left .bottom .avatorContainer {
   -webkit-box-flex: 0;
   -ms-flex-positive: 0;
   flex-grow: 0;
@@ -171,11 +171,11 @@ export default {
   align-items: center;
 }
 
-.student-lesson-card .box-card > div .left .bottom > span {
+.lesson-card .box-card > div .left .bottom > span {
   font-size: 14px;
 }
 
-.student-lesson-card .box-card > div .left .bottom > span:last-child {
+.lesson-card .box-card > div .left .bottom > span:last-child {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -187,8 +187,8 @@ export default {
   margin-left: 20px;
 }
 
-.student-lesson-card .box-card > div .left .bottom .className,
-.lesson-cardS .box-card > div .left .bottom .teacherName {
+.lesson-card .box-card > div .left .bottom .className,
+.lesson-card .box-card > div .left .bottom .teacherName {
   overflow: hidden;
   width: 100%;
   text-align: left;
@@ -197,12 +197,12 @@ export default {
   margin-left: 5px;
 }
 
-.student-lesson-card .mark img {
+.lesson-card .mark img {
   display: block;
   height: 100%;
 }
 
-.student-lesson-card .box-card.style0 {
+.lesson-card .box-card.style0 {
   background-image: -webkit-gradient(
     linear,
     left top,
@@ -213,7 +213,7 @@ export default {
   background-image: linear-gradient(to bottom right, #ff6098, #ffa96a);
 }
 
-.student-lesson-card .box-card.style1 {
+.lesson-card .box-card.style1 {
   background-image: -webkit-gradient(
     linear,
     left top,
@@ -224,7 +224,7 @@ export default {
   background-image: linear-gradient(to bottom right, #1fbdb8, #47e894);
 }
 
-.student-lesson-card .box-card.style2 {
+.lesson-card .box-card.style2 {
   background-image: -webkit-gradient(
     linear,
     left top,
@@ -235,7 +235,7 @@ export default {
   background-image: linear-gradient(to bottom right, #8360fa, #cb8dff);
 }
 
-.student-lesson-card .box-card.style3 {
+.lesson-card .box-card.style3 {
   background-image: -webkit-gradient(
     linear,
     left top,
@@ -246,12 +246,8 @@ export default {
   background-image: linear-gradient(to bottom right, #4762f3, #5cc3ff);
 }
 
-.student-lesson-card .box-card > div .right .el-dropdown {
+.lesson-card .box-card > div .right .el-dropdown {
   top: -5px;
   z-index: 9;
 }
-
-
-
-
 </style>
