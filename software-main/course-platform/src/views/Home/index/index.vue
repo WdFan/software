@@ -1,15 +1,19 @@
 <template>
   <div class="index">
     <el-tabs v-model="tabActiveName">
-      <el-tab-pane label="我教的课" name="teach">教</el-tab-pane>
+      <el-tab-pane label="我教的课" name="teach">
+        <teacher-container
+          v-if="this.userTeachData"
+          :lesson-data="this.userTeachData[0]"
+        >
+        </teacher-container>
+      </el-tab-pane>
       <el-tab-pane label="我听的课" name="study">
         <el-row>
           <el-col :span="6" class="studentCol">
             <student-lesson-card
-              style-str="style1"
-              class-name="1班"
-              course-name="英美文学鉴赏"
-              teacher-name="周博"
+              v-if="this.userTeachData"
+              :class-data="this.userTeachData[0][0]"
             ></student-lesson-card>
           </el-col>
         </el-row>
@@ -60,8 +64,8 @@
 
     <el-dialog
       v-model="createLesson"
-      width="350px"
-      top="calc(50vh - 143px)"
+      width="460px"
+      top="calc(50vh - 255px)"
       custom-class="specialDialog createLessonDialog editLessonDialog"
     >
       <template #title>
@@ -108,9 +112,11 @@
 </template>
 
 <script>
-import StudentLessonCard from "@/component/StudentLessonCard.vue";
+import StudentLessonCard from "../../../component/StudentLessonCard.vue";
+import api from "../../../api/api";
+import TeacherContainer from "../../../component/TeacherContainer.vue";
 export default {
-  components: { StudentLessonCard },
+  components: { StudentLessonCard, TeacherContainer },
   name: "index",
   component: {
     StudentLessonCard,
@@ -129,12 +135,20 @@ export default {
       },
       addClassButton: "disabled",
       createLessonButton: "disabled",
+
+      userTeachData: null,
     };
   },
   watch: {
     tabActiveName() {
       this.$store.commit("updateTab", this.tabActiveName);
     },
+  },
+  beforeCreate() {
+    api.getTeachClass(this.$store.state.user_info.username).then((res) => {
+      this.userTeachData = res.data;
+      console.warn(res.data);
+    });
   },
   methods: {
     joinClassChange(value) {

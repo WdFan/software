@@ -27,7 +27,7 @@ a {
   min-width: 140px !important;
 }
 
-.lesson-card .box-card>div {
+.lesson-cardS .box-card>div {
   height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;

@@ -90,7 +90,6 @@ export default {
   methods: {
     handleLogin() {
       api.login(this.loginForm).then((res) => {
-        console.log(res);
         if (res.data.code == 200) {
           const user_info = res.data.user_info;
           this.$store.commit('updateUser', user_info)
