@@ -16,8 +16,6 @@ class banjiserializer(serializers.ModelSerializer):
         model = banji
         fields = '__all__'
 
-
-
 class courseserializer(serializers.ModelSerializer):
     #banji = banjiserializer(read_only=True)
     #用户创建更新外键

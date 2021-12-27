@@ -92,6 +92,13 @@ class joinBanjiView(APIView):
         banjiobj = banji.objects.filter(code=code).first()
         if banjiobj is None:
             return Response({'error':'该班级对象不存在'})
+        serializer = banjiserializer(banjiobj)
+        banjiobj.student.add(studentobj)
+        #if serializer.is_valid():
+        #    serializer.instance.student.add(studentobj)
+        #    serializer.save()
+        banjiobj.save()
+        return Response({'code':200,'msg':'加入班级成功'})
 
 
 
