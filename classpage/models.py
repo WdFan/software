@@ -7,7 +7,6 @@ class course(models.Model):
     name = models.CharField(max_length=30)
     #课程简称
     simple_name = models.CharField(max_length=16)
-
     #color = models.CharField(max_length=50,blank=True)
     #banji = models.ForeignKey(banji,null=True,blank=True,on_delete=models.CASCADE,related_name='course')
     def __str__(self):
@@ -15,6 +14,12 @@ class course(models.Model):
 
 
 class banji(models.Model):
+    colorChoice = (('color0','style0'),
+                   ('color1','style1'),
+                   ('color2','style2'),
+                   ('color3','style3'),
+                   )
+
     #班级名称
     name = models.CharField(max_length=20)
     #开设年份
@@ -26,9 +31,11 @@ class banji(models.Model):
     #课程
     course = models.ForeignKey(course,null=True,blank=True,on_delete=models.CASCADE,related_name='banji')
     #学生
-    color =  models.CharField(max_length=50,blank=True)
+    color =  models.CharField(max_length=50,blank=True,choices=colorChoice)
     #student = models.ForeignKey(loginUser,null=True,blank=True,on_delete=models.CASCADE,related_name='banji')
-    num = models.IntegerField(blank=True,null=True)
+    num = models.IntegerField(blank=True,default=0)
+
+
     def __str__(self):
         return self.name
 

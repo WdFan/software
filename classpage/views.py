@@ -12,21 +12,43 @@ from classpage.models import banji,course
 import json
 from collections import OrderedDict
 
+
 class createCourseView(APIView):
     def post(self,request):
         #数据提交成功
         serializer = courseserializer(data=self.request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data,status=status.HTTP_200_OK)
+            #获取老师身份信息
+            teacher = self.request.data['teacher']
+            courses = course.objects.filter(teacher=teacher)
+            serial = courseserializer(courses,many=True)
+            return Response(serial.data,status=status.HTTP_200_OK)
         else:
             #数据提交失败
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
 
 class createBanjiView(APIView):
     def post(self,request):
         #创建班级
         serializer = banjiserializer(data=self.request.data)
+        '''
+        if serializer.is_valid():
+            serializer.save()
+            #找到cou对象
+            couid = serializer.validated_data.get('couid')
+            cou = course.objects.filter(pk=couid).first()
+            #找到
+            id = serializer.validated_data.get('id')
+            ban = banji.objects.filter(pk=couid).first()
+            ban.course = cou
+            ban.save()
+            return Response({'code':200})
+        else:
+            return Response({'code':400})
+        '''
+
         if serializer.is_valid():
             serializer.save()
             #获取到课程号的id
@@ -48,39 +70,10 @@ class getbanjiListView(APIView):
         username = self.request.data['username']
         #找到该用户所教的所有课程
         courses = course.objects.filter(teacher=username)
-        #找到后根据课程找到所有班级
         if course is None:
             return {'message': '该用户未创建课程'}
-        dict = OrderedDict()
-        i = 0
-        course_id =[]
-        dict1 = OrderedDict()
-
-
-        for c in courses:
-            course_id.append(c.id)
-            #找到所有的banji对象
-            banjis = c.banji.all()
-            #创建序列化器
-            serializer = banjiserializer(banjis,many=True)
-            dict1[i]=serializer.data
-            i = i+1
-            '''
-            for banji in banjis:
-                serializer = banjiserializer(banji)
-                d2 = serializer.data
-                dict[i] = d2
-                i =i+1
-            '''
-
-
-        return Response(dict1)
-
-
-
-
-
-
+        serializer = courseserializer(courses,many=True)
+        return Response(serializer.data)
 
 
 
