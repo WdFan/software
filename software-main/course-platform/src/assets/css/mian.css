@@ -19,6 +19,10 @@ a {
   text-decoration: none
 }
 
+.c9b {
+  color: #9b9b9b;
+}
+
 .el-menu--popup {
   min-width: 140px !important;
 }
@@ -49,4 +53,79 @@ a {
   --el-dropdown-menuItem-hover-fill: var(--el-color-primary-light-9);
   --el-dropdown-menuItem-hover-color: var(--el-color-primary-light-2);
   --el-dropdown-menu-index: 10;
+}
+
+
+.specialDialog .el-dialog__header > button {
+  display: none;
+}
+
+.specialDialog.joinClassDialog .el-dialog__header span {
+  display: inline-block;
+  height: 25px;
+  line-height: 25px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
+}
+
+.specialDialog .el-dialog__header {
+  padding: 20px;
+  line-height: 1;
+  border-bottom: 2px solid #eee;
+}
+
+
+.specialDialog.joinClassDialog .el-dialog__header {
+  display: block;
+  border-bottom: none;
+  padding-bottom: 0;
+  padding-top: 30px;
+}
+
+.specialDialog.joinClassDialog .dialog-body .joinClassForm .el-form-item .el-input__inner {
+  border: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
+  border-bottom: 1px solid #5096f5;
+}
+
+.specialDialog.joinClassDialog .dialog-body .joinClassForm .el-form-item .el-input input {
+  height: 32px;
+  line-height: 32px;
+  font-size: 22px;
+  text-align: center;
+  color: #333;
+  font-weight: 600;
+}
+
+.specialDialog .dialog-body .commonForm .el-form-item .el-form-item__content .el-input input {
+  background-color: #fff;
+}
+
+.specialDialog.joinClassDialog
+  .dialog-body
+  .joinClassForm
+  .el-form-item__content {
+  height: 32px;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+}
+
+.flexbox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.specialDialog.joinClassDialog .el-dialog__body {
+  padding: 18px 30px 30px !important;
 }
