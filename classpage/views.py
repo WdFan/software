@@ -11,6 +11,10 @@ from login.models import loginUser
 from classpage.models import banji,course
 import json
 from collections import OrderedDict
+import random
+
+alphabet = 'ABCDEFGHIJKLMNOPQISTUVWXYZ'
+characters = ''.join(random.sample(alphabet, 5))
 
 
 class createCourseView(APIView):
@@ -48,13 +52,13 @@ class createBanjiView(APIView):
         else:
             return Response({'code':400})
         '''
-
         if serializer.is_valid():
             serializer.save()
             #获取到课程号的id
             id = serializer.validated_data.get('couid')
             cou = course.objects.filter(pk=id).first()
             serializer.instance.course = cou
+            serializer.instance.code = characters
             serializer.save()
             return Response(serializer.data,status=status.HTTP_200_OK)
         else:
@@ -74,6 +78,20 @@ class getbanjiListView(APIView):
             return {'message': '该用户未创建课程'}
         serializer = courseserializer(courses,many=True)
         return Response(serializer.data)
+
+class joinBanjiView(APIView):
+    '''提交邀请码，加入到班级中'''
+    def post(self,request):
+        #用户名称
+        username  = self.request.data['username']
+        #班级邀请码
+        code = self.request.data['code']
+        #查找到该对象
+        studentobj = loginUser.objects.filter(username=username).first()
+        #根据班级邀请码查找到班级
+        banjiobj = banji.objects.filter(code=code).first()
+        if banjiobj is None:
+            return Response({'error':'该班级对象不存在'})
 
 
 

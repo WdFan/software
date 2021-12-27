@@ -1,5 +1,5 @@
 from django.db import models
-
+from login.models import loginUser
 class course(models.Model):
     #开设本课的用户
     teacher = models.CharField(max_length=30,blank=True)
@@ -14,10 +14,12 @@ class course(models.Model):
 
 
 class banji(models.Model):
-    colorChoice = (('color0','style0'),
-                   ('color1','style1'),
-                   ('color2','style2'),
-                   ('color3','style3'),
+
+    colorChoice = (
+                    ('style0','style0'),
+                   ('style1','style1'),
+                   ('style2','style2'),
+                   ('style3','style3'),
                    )
 
     #班级名称
@@ -31,13 +33,23 @@ class banji(models.Model):
     #课程
     course = models.ForeignKey(course,null=True,blank=True,on_delete=models.CASCADE,related_name='banji')
     #学生
-    color =  models.CharField(max_length=50,blank=True,choices=colorChoice)
+    color =  models.CharField(max_length=50,blank=True)
     #student = models.ForeignKey(loginUser,null=True,blank=True,on_delete=models.CASCADE,related_name='banji')
     num = models.IntegerField(blank=True,default=0)
 
+    code = models.CharField(max_length=10,blank=True)
+
+    student = models.ManyToManyField(to=loginUser,related_name='banji',blank=True)
 
     def __str__(self):
         return self.name
 
 
 
+'''
+import random
+
+alphabet = 'ABCDEFGHIJKLMNOPQISTUVWXYZ'
+characters = ''.join(random.sample(alphabet, 5))
+print(characters)
+'''
