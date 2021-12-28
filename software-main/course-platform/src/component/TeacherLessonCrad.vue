@@ -6,13 +6,13 @@
           <h1>{{ classData.name }}</h1>
         </div>
         <div class="bottom">
-          <span class="avatorContainer">
+          <span>
             <el-icon color="#fff" :size="16"><user /></el-icon>
             <span class="teacherName">{{ classData.num }}</span></span
           >
           <span>
             <el-icon color="#fff" :size="16"><calendar /></el-icon>
-            <span class="className">{{ classData.year + classData.season }}</span></span
+            <span class="className">{{ classData.year + '学' + classData.season + '学期' }}</span></span
           >
         </div>
       </div>
@@ -28,7 +28,10 @@
       </div>
     </el-card>
     <div class="mark">
-      <img :src="require('@/assets/img/mark.png')" alt="mark" />
+      <img v-if="classData.color == 'style0'" :src="require('@/assets/img/mark0.png')" alt="mark" />
+      <img v-else-if="classData.color == 'style1'" :src="require('@/assets/img/mark1.png')" alt="mark" />
+      <img v-else-if="classData.color == 'style2'" :src="require('@/assets/img/mark2.png')" alt="mark" />
+      <img v-else-if="classData.color == 'style3'" :src="require('@/assets/img/mark3.png')" alt="mark" />
     </div>
   </div>
 </template>

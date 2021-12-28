@@ -3,7 +3,7 @@
     <el-tabs v-model="tabActiveName">
       <el-tab-pane label="我教的课" name="teach">
         <teacher-container
-          v-for="teachData in this.userTeachData"
+          v-for="teachData in this.$store.state.userTeachData"
           :lesson-data="teachData"
           :key="teachData.id"
         >
@@ -13,8 +13,8 @@
         <el-row>
           <el-col :span="6" class="studentCol">
             <student-lesson-card
-              v-if="this.userStudyData"
-              :class-data="this.userStudyData[0]"
+              v-if="false"
+              :class-data="userStudyData[0]"
             ></student-lesson-card>
           </el-col>
         </el-row>
@@ -136,9 +136,6 @@ export default {
       },
       addClassButton: "disabled",
       createLessonButton: "disabled",
-
-      userTeachData: null,
-      userStudyData: null
     };
   },
   watch: {
@@ -146,11 +143,14 @@ export default {
       this.$store.commit("updateTab", this.tabActiveName);
     },
   },
-  beforeCreate() {
-    api.getTeachClass(this.$store.state.user_info.username).then((res) => {
-      this.userTeachData = res.data;
-      console.warn(res.data);
-    });
+  created() {
+    if (this.$store.state.userTeachData.length == 0) {
+      console.warn(111);
+      api.getTeachClass(this.$store.state.user_info.username).then((res) => {
+        this.$store.state.userTeachData = res.data;
+        console.warn(res.data);
+      });
+    }
   },
   methods: {
     joinClassChange(value) {
