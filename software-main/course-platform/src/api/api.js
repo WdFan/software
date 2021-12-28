@@ -5,6 +5,7 @@ const api = {
   login: (user_info) => { return axios.post('/api/login/', user_info) },
   signup: (user_info) => { return axios.post('/api/register/', user_info) },
   getTeachClass: (username) => { return axios.post('/api/getbanjiList/', {'username': username}) },
+  getStudyClass: (username) => { return axios.post('/api/getclassList/', {'username': username}) }
 }
 
 export default api;

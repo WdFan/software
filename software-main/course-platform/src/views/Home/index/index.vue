@@ -12,14 +12,24 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="我听的课" name="study">
-        <el-row>
-          <el-col :span="6" class="studentCol">
-            <student-lesson-card
-              v-if="false"
-              :class-data="userStudyData[0]"
-            ></student-lesson-card>
-          </el-col>
-        </el-row>
+        <div class="TcardGroup">
+          <el-row class="grid" v-if="this.$store.state.userStudyData">
+            <el-col
+              v-for="studyData in this.$store.state.userStudyData"
+              :key="studyData.id"
+              class="studentCol"
+              :xs="8"
+              :sm="8"
+              :md="8"
+              :lg="8"
+              :xl="6"
+            >
+              <student-lesson-card
+                :class-data="studyData"
+              ></student-lesson-card>
+            </el-col>
+          </el-row>
+        </div>
       </el-tab-pane>
     </el-tabs>
 
@@ -115,15 +125,12 @@
 </template>
 
 <script>
-import StudentLessonCard from "../../../component/StudentLessonCard.vue";
 import api from "../../../api/api";
+import StudentLessonCard from "../../../component/StudentLessonCard.vue";
 import TeacherContainer from "../../../component/TeacherContainer.vue";
 export default {
-  components: { StudentLessonCard, TeacherContainer },
+  components: { TeacherContainer, StudentLessonCard },
   name: "index",
-  component: {
-    StudentLessonCard,
-  },
   data() {
     return {
       tabActiveName: "teach",
@@ -142,7 +149,6 @@ export default {
   },
   watch: {
     tabActiveName() {
-      console.warn(this.tabActiveName);
       this.getData();
       this.$store.commit("updateTab", this.tabActiveName);
     },
@@ -169,7 +175,15 @@ export default {
       ) {
         api.getTeachClass(this.$store.state.user_info.username).then((res) => {
           this.$store.state.userTeachData = res.data;
-          console.warn(res.data);
+          // console.warn(res.data);
+        });
+      } else if (
+        this.tabActiveName == "study" &&
+        this.$store.state.userStudyData === null
+      ) {
+        api.getStudyClass(this.$store.state.user_info.username).then((res) => {
+          this.$store.state.userStudyData = res.data;
+          // console.warn(res.data);
         });
       }
     },
@@ -219,9 +233,12 @@ export default {
   color: #4f95f5;
 }
 
-.studentCol {
-  margin-bottom: 30px;
-  padding: 0 20px;
+.index {
+  min-width: 1130px;
+  width: 100%;
+  background-color: #fff;
+  min-height: 100%;
+  position: relative;
 }
 
 .index .headerButtonGroup {
@@ -391,5 +408,20 @@ export default {
 
 .specialDialog .dialog-body .commonForm .el-form-item:last-child {
   margin-bottom: 0;
+}
+.TcardGroup {
+  width: 100%;
+}
+
+.TcardGroup .grid {
+  margin-left: -20px;
+  margin-right: -20px;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+}
+
+.TcardGroup .studentCol {
+  margin-bottom: 30px;
+  padding: 0 20px;
 }
 </style>

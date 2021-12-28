@@ -6,7 +6,7 @@ export default createStore({
     is_login: (localStorage.getItem("is_login") || false),
     home_index_tab: (localStorage.getItem("home_index_tab") || "teach"),
     userTeachData: null,
-    userStudyData: null
+    userStudyData: null,
   },
   mutations: {
     updateUser(state, data) {

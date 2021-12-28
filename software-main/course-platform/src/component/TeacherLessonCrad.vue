@@ -12,7 +12,7 @@
           >
           <span>
             <el-icon color="#fff" :size="16"><calendar /></el-icon>
-            <span class="className">{{ classData.year + '学' + classData.season + '学期' }}</span></span
+            <span class="className">{{ classData.year + '年' + classData.season + '学期' }}</span></span
           >
         </div>
       </div>
