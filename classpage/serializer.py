@@ -11,7 +11,6 @@ class banjiserializer(serializers.ModelSerializer):
     #course_id = serializers.IntegerField(write_only=True,allow_null=True,required=False)
     #id = serializers.IntegerField()
     #student_id = serializers.ListField()
-
     class Meta:
         model = banji
         fields = '__all__'
@@ -26,6 +25,24 @@ class courseserializer(serializers.ModelSerializer):
         fields='__all__'
 
 
-
+class courseserializer1(serializers.ModelSerializer):
+    #banji = banjiserializer(read_only=True)
+    #用户创建更新外键
+    #banji_id = serializers.IntegerField(write_only=True,allow_null=True,required=False)
+    #banji = banjiserializer(many=True,required=False)
+    class Meta:
+        model = course
+        fields='__all__'
+class banjiserializer1(serializers.ModelSerializer):
+    #student = loginUserserializer(read_only=True)
+    #创建班级
+    #student_id = serializers.IntegerField(write_only=True,allow_null=True,required=False)
+    course = courseserializer1(required=False)
+    #course_id = serializers.IntegerField(write_only=True,allow_null=True,required=False)
+    #id = serializers.IntegerField()
+    #student_id = serializers.ListField()
+    class Meta:
+        model = banji
+        fields = '__all__'
 
 

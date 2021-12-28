@@ -40,6 +40,19 @@ a {
   box-sizing: border-box;
 }
 
+.lesson-cardT .box-card>div {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  position: relative;
+  z-index: 12;
+  box-sizing: border-box;
+}
+
 .index .el-tabs .el-tabs__header {
   margin: 0;
 }

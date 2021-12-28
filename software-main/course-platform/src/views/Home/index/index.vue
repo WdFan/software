@@ -3,8 +3,9 @@
     <el-tabs v-model="tabActiveName">
       <el-tab-pane label="我教的课" name="teach">
         <teacher-container
-          v-if="this.userTeachData"
-          :lesson-data="this.userTeachData[0]"
+          v-for="teachData in this.userTeachData"
+          :lesson-data="teachData"
+          :key="teachData.id"
         >
         </teacher-container>
       </el-tab-pane>
@@ -12,8 +13,8 @@
         <el-row>
           <el-col :span="6" class="studentCol">
             <student-lesson-card
-              v-if="this.userTeachData"
-              :class-data="this.userTeachData[0][0]"
+              v-if="this.userStudyData"
+              :class-data="this.userStudyData[0]"
             ></student-lesson-card>
           </el-col>
         </el-row>
@@ -137,6 +138,7 @@ export default {
       createLessonButton: "disabled",
 
       userTeachData: null,
+      userStudyData: null
     };
   },
   watch: {

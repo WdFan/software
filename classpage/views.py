@@ -6,7 +6,7 @@ from login.models import loginUser
 from login.serializer import loginUserserializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from classpage.serializer import banjiserializer,courseserializer
+from classpage.serializer import banjiserializer,courseserializer,banjiserializer1
 from login.models import loginUser
 from classpage.models import banji,course
 import json
@@ -18,6 +18,7 @@ characters = ''.join(random.sample(alphabet, 5))
 
 
 class createCourseView(APIView):
+    '''创建课程'''
     def post(self,request):
         #数据提交成功
         serializer = courseserializer(data=self.request.data)
@@ -34,6 +35,7 @@ class createCourseView(APIView):
 
 
 class createBanjiView(APIView):
+    '''创建班级'''
     def post(self,request):
         #创建班级
         serializer = banjiserializer(data=self.request.data)
@@ -67,6 +69,7 @@ class createBanjiView(APIView):
 
 #得到所交的班级
 class getbanjiListView(APIView):
+    '''得到所有的班级'''
     def post(self,request):
         #postBody = request.body
         #info = json.loads(postBody)
@@ -80,7 +83,7 @@ class getbanjiListView(APIView):
         return Response(serializer.data)
 
 class joinBanjiView(APIView):
-    '''提交邀请码，加入到班级中'''
+    '''用户提交邀请码，加入到班级中'''
     def post(self,request):
         #用户名称
         username  = self.request.data['username']
@@ -88,17 +91,35 @@ class joinBanjiView(APIView):
         code = self.request.data['code']
         #查找到该对象
         studentobj = loginUser.objects.filter(username=username).first()
+        if studentobj is None:
+            return Response({'error': '该学生对象不存在'})
         #根据班级邀请码查找到班级
         banjiobj = banji.objects.filter(code=code).first()
         if banjiobj is None:
             return Response({'error':'该班级对象不存在'})
         serializer = banjiserializer(banjiobj)
-        banjiobj.student.add(studentobj)
+        if banjiobj.student is None:
+            banjiobj.student.add(studentobj)
+        else:
+            return Response({'code':400,'msg':'您已经加入到班级中，不可重复加入'})
         #if serializer.is_valid():
         #    serializer.instance.student.add(studentobj)
         #    serializer.save()
         banjiobj.save()
         return Response({'code':200,'msg':'加入班级成功'})
+
+class getclassListView(APIView):
+    '''找到用户所听的课程'''
+    def post(self,request):
+        #获取到学生的姓名
+        username = self.request.data['username']
+        #根据学生查找所在在的班级
+        student = loginUser.objects.all().filter(username=username).first()
+        if student is None:
+            return Response({'errot':'该学生不存在'})
+        #查找该学生的班级
+        banjis = banjiserializer1(student.banji,many=True)
+        return Response(banjis.data)
 
 
 
