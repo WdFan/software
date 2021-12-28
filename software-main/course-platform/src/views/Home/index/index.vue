@@ -2,12 +2,14 @@
   <div class="index">
     <el-tabs v-model="tabActiveName">
       <el-tab-pane label="我教的课" name="teach">
-        <teacher-container
-          v-for="teachData in this.$store.state.userTeachData"
-          :lesson-data="teachData"
-          :key="teachData.id"
-        >
-        </teacher-container>
+        <div v-if="this.$store.state.userTeachData">
+          <teacher-container
+            v-for="teachData in this.$store.state.userTeachData"
+            :lesson-data="teachData"
+            :key="teachData.id"
+          >
+          </teacher-container>
+        </div>
       </el-tab-pane>
       <el-tab-pane label="我听的课" name="study">
         <el-row>
@@ -124,7 +126,7 @@ export default {
   },
   data() {
     return {
-      tabActiveName: this.$store.state.home_index_tab,
+      tabActiveName: "teach",
       joinClass: false,
       createLesson: false,
       joinClassForm: {
@@ -140,16 +142,16 @@ export default {
   },
   watch: {
     tabActiveName() {
+      console.warn(this.tabActiveName);
+      this.getData();
       this.$store.commit("updateTab", this.tabActiveName);
     },
   },
   created() {
-    if (this.$store.state.userTeachData.length == 0) {
-      console.warn(111);
-      api.getTeachClass(this.$store.state.user_info.username).then((res) => {
-        this.$store.state.userTeachData = res.data;
-        console.warn(res.data);
-      });
+    if (this.tabActiveName != this.$store.state.home_index_tab) {
+      this.tabActiveName = this.$store.state.home_index_tab;
+    } else {
+      this.getData();
     }
   },
   methods: {
@@ -158,6 +160,17 @@ export default {
         this.addClassButton = null;
       } else {
         this.addClassButton = "disabled";
+      }
+    },
+    getData() {
+      if (
+        this.tabActiveName == "teach" &&
+        this.$store.state.userTeachData === null
+      ) {
+        api.getTeachClass(this.$store.state.user_info.username).then((res) => {
+          this.$store.state.userTeachData = res.data;
+          console.warn(res.data);
+        });
       }
     },
     studentJoinClass() {
