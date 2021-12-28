@@ -198,3 +198,36 @@ a {
   font-size: 14px;
   color: #9b9b9b;
 }
+
+.blank-card .box-card .el-card__body {
+  padding: 0;
+  height: 100%;
+}
+
+.blank-card .box-card .el-card__body .container {
+  width: 100%;
+  padding: 43px;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.blank-card .box-card .el-card__body .container:hover {
+  color: #5096F5;
+}
+
+.blank-card .box-card .el-card__body .container:hover>i {
+  color: #5096F5;
+}

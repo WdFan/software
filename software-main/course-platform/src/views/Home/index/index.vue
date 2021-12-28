@@ -2,7 +2,7 @@
   <div class="index">
     <el-tabs v-model="tabActiveName">
       <el-tab-pane label="我教的课" name="teach">
-        <div v-if="this.$store.state.userTeachData">
+        <div v-if="this.$store.state.userTeachData" v-loading="loading1">
           <teacher-container
             v-for="teachData in this.$store.state.userTeachData"
             :lesson-data="teachData"
@@ -13,7 +13,7 @@
       </el-tab-pane>
       <el-tab-pane label="我听的课" name="study">
         <div class="TcardGroup">
-          <el-row class="grid" v-if="this.$store.state.userStudyData">
+          <el-row class="grid" v-if="this.$store.state.userStudyData" v-loading="loading2">
             <el-col
               v-for="studyData in this.$store.state.userStudyData"
               :key="studyData.id"
@@ -133,6 +133,8 @@ export default {
   name: "index",
   data() {
     return {
+      loading1: false,
+      loading2: false,
       tabActiveName: "teach",
       joinClass: false,
       createLesson: false,
@@ -173,17 +175,21 @@ export default {
         this.tabActiveName == "teach" &&
         this.$store.state.userTeachData === null
       ) {
+        this.loading1 = true;
         api.getTeachClass(this.$store.state.user_info.username).then((res) => {
           this.$store.state.userTeachData = res.data;
           // console.warn(res.data);
+          this.loading1 = false;
         });
       } else if (
         this.tabActiveName == "study" &&
         this.$store.state.userStudyData === null
       ) {
+        this.loading2 = true;
         api.getStudyClass(this.$store.state.user_info.username).then((res) => {
           this.$store.state.userStudyData = res.data;
           // console.warn(res.data);
+          this.loading2 = false;
         });
       }
     },

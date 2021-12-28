@@ -17,7 +17,7 @@
       </el-col>
     </el-row>
     <div class="TCardGroup">
-      <el-row style="margin-left: -20px; margin-right: -20px" :gutter="40">
+      <el-row :gutter="40">
         <el-col
           v-for="classdata in lessonData.banji"
           :key="classdata.id"
@@ -31,14 +31,28 @@
           <teacher-lesson-crad :class-data="classdata"></teacher-lesson-crad>
         </el-col>
       </el-row>
+      <el-row :gutter="40">
+        <el-col
+          v-if="lessonData.banji.length == 0"
+          class="teacherCol"
+          :xs="8"
+          :sm="8"
+          :md="8"
+          :lg="8"
+          :xl="6"
+        >
+          <blank-card></blank-card>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
 
 <script>
 import TeacherLessonCrad from "./TeacherLessonCrad.vue";
+import BlankCard from "./BlankCard.vue";
 export default {
-  components: { TeacherLessonCrad },
+  components: { TeacherLessonCrad, BlankCard },
   name: "TeacherContainer",
   props: {
     lessonData: Object,
