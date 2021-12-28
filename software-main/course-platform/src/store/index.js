@@ -3,8 +3,10 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     user_info: JSON.parse(localStorage.getItem("user_info") || '{}'),
-    is_login: false,
+    is_login: (localStorage.getItem("is_login") || false),
     home_index_tab: (localStorage.getItem("home_index_tab") || "teach"),
+    userTeachData: null,
+    userStudyData: null
   },
   mutations: {
     updateUser(state, data) {
@@ -21,6 +23,8 @@ export default createStore({
       state.user_info = {};
       state.is_login = false;
       state.home_index_tab = "teach"
+      state.userTeachData = null;
+      state.userStudyData = null;
       localStorage.clear();
     }
   },

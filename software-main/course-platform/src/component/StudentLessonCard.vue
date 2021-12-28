@@ -28,7 +28,10 @@
       </div>
     </el-card>
     <div class="mark">
-      <img :src="require('@/assets/img/mark.png')" alt="mark" />
+      <img v-if="classData.color == 'style0'" :src="require('@/assets/img/mark0.png')" alt="mark" />
+      <img v-else-if="classData.color == 'style1'" :src="require('@/assets/img/mark1.png')" alt="mark" />
+      <img v-else-if="classData.color == 'style2'" :src="require('@/assets/img/mark2.png')" alt="mark" />
+      <img v-else-if="classData.color == 'style3'" :src="require('@/assets/img/mark3.png')" alt="mark" />
     </div>
   </div>
 </template>

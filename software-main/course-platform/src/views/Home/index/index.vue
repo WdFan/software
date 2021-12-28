@@ -2,19 +2,21 @@
   <div class="index">
     <el-tabs v-model="tabActiveName">
       <el-tab-pane label="我教的课" name="teach">
-        <teacher-container
-          v-for="teachData in this.userTeachData"
-          :lesson-data="teachData"
-          :key="teachData.id"
-        >
-        </teacher-container>
+        <div v-if="this.$store.state.userTeachData">
+          <teacher-container
+            v-for="teachData in this.$store.state.userTeachData"
+            :lesson-data="teachData"
+            :key="teachData.id"
+          >
+          </teacher-container>
+        </div>
       </el-tab-pane>
       <el-tab-pane label="我听的课" name="study">
         <el-row>
           <el-col :span="6" class="studentCol">
             <student-lesson-card
-              v-if="this.userStudyData"
-              :class-data="this.userStudyData[0]"
+              v-if="false"
+              :class-data="userStudyData[0]"
             ></student-lesson-card>
           </el-col>
         </el-row>
@@ -124,7 +126,7 @@ export default {
   },
   data() {
     return {
-      tabActiveName: this.$store.state.home_index_tab,
+      tabActiveName: "teach",
       joinClass: false,
       createLesson: false,
       joinClassForm: {
@@ -136,21 +138,21 @@ export default {
       },
       addClassButton: "disabled",
       createLessonButton: "disabled",
-
-      userTeachData: null,
-      userStudyData: null
     };
   },
   watch: {
     tabActiveName() {
+      console.warn(this.tabActiveName);
+      this.getData();
       this.$store.commit("updateTab", this.tabActiveName);
     },
   },
-  beforeCreate() {
-    api.getTeachClass(this.$store.state.user_info.username).then((res) => {
-      this.userTeachData = res.data;
-      console.warn(res.data);
-    });
+  created() {
+    if (this.tabActiveName != this.$store.state.home_index_tab) {
+      this.tabActiveName = this.$store.state.home_index_tab;
+    } else {
+      this.getData();
+    }
   },
   methods: {
     joinClassChange(value) {
@@ -158,6 +160,17 @@ export default {
         this.addClassButton = null;
       } else {
         this.addClassButton = "disabled";
+      }
+    },
+    getData() {
+      if (
+        this.tabActiveName == "teach" &&
+        this.$store.state.userTeachData === null
+      ) {
+        api.getTeachClass(this.$store.state.user_info.username).then((res) => {
+          this.$store.state.userTeachData = res.data;
+          console.warn(res.data);
+        });
       }
     },
     studentJoinClass() {
