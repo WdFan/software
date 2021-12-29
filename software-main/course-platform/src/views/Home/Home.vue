@@ -42,9 +42,6 @@ export default {
   components: {
     IconMenu,
   },
-  created() {
-    this.$router.push("/home/index");
-  },
   data() {
     return {
       username: this.$store.state.user_info.stu_name,

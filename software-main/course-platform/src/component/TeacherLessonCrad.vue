@@ -1,5 +1,5 @@
 <template>
-  <div class="lesson-cardT">
+  <div class="lesson-cardT" @click="jumpToTeacherPage">
     <el-card :class="'box-card ' + classData.color" shadow="hover">
       <div class="left">
         <div class="top">
@@ -12,7 +12,9 @@
           >
           <span>
             <el-icon color="#fff" :size="16"><calendar /></el-icon>
-            <span class="className">{{ classData.year + '年' + classData.season + '学期' }}</span></span
+            <span class="className">{{
+              classData.year + "年" + classData.season + "学期"
+            }}</span></span
           >
         </div>
       </div>
@@ -20,7 +22,7 @@
         <el-dropdown
           ><el-icon color="#fff" :size="22"><more-filled /></el-icon>
           <template #dropdown>
-            <el-dropdown-menu style="padding: 5px 0;">
+            <el-dropdown-menu style="padding: 5px 0">
               <el-dropdown-item @click="deleteClass">删除</el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -28,28 +30,47 @@
       </div>
     </el-card>
     <div class="mark">
-      <img v-if="classData.color == 'style0'" :src="require('@/assets/img/mark0.png')" alt="mark" />
-      <img v-else-if="classData.color == 'style1'" :src="require('@/assets/img/mark1.png')" alt="mark" />
-      <img v-else-if="classData.color == 'style2'" :src="require('@/assets/img/mark2.png')" alt="mark" />
-      <img v-else-if="classData.color == 'style3'" :src="require('@/assets/img/mark3.png')" alt="mark" />
+      <img
+        v-if="classData.color == 'style0'"
+        :src="require('@/assets/img/mark0.png')"
+        alt="mark"
+      />
+      <img
+        v-else-if="classData.color == 'style1'"
+        :src="require('@/assets/img/mark1.png')"
+        alt="mark"
+      />
+      <img
+        v-else-if="classData.color == 'style2'"
+        :src="require('@/assets/img/mark2.png')"
+        alt="mark"
+      />
+      <img
+        v-else-if="classData.color == 'style3'"
+        :src="require('@/assets/img/mark3.png')"
+        alt="mark"
+      />
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "StudentLessonCard",
+  name: "TeacherLessonCard",
   props: {
-    classData: Object
+    classData: Object,
   },
   data() {
     return {};
   },
   methods: {
     deleteClass() {
-      console.warn('Delete!');
-    }
-  }
+      console.warn("Delete!");
+    },
+    jumpToTeacherPage() {
+      this.$router.push("/home/teacherLog/" + this.classData.id);
+    },
+  },
 };
 </script>
 
@@ -175,10 +196,10 @@ export default {
   font-size: 14px;
 }
 
-.lesson-cardT .box-card>div .left .bottom>span:nth-child(2) {
-    margin-left: 20px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.lesson-cardT .box-card > div .left .bottom > span:nth-child(2) {
+  margin-left: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .lesson-cardT .box-card > div .left .bottom .className,

@@ -22,23 +22,25 @@ const routes = [
     component: () => import('../views/Home/Home.vue'),
     children: [
       {
-        path: '/home/index',
+        path: 'index',
         name: 'index',
         component: () => import("../views/Home/index/index.vue")
       },
       {
-        path: '/home/personal',
+        path: 'personal',
         name: 'personal',
         component: () => import("../views/Home/index/personal.vue")
       },
       {
-        path: '/home/studentLog',
+        path: 'studentLog/:id',
         name: 'studentLog',
+        props: true,
         component: () => import("../views/Home/index/studentLog.vue")
       },
       {
-        path: '/home/teacherLog',
+        path: 'teacherLog/:id',
         name: 'teacherLog',
+        props: true,
         component: () => import("../views/Home/index/teacherLog.vue")
       }
     ]

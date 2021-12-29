@@ -1,5 +1,5 @@
 <template>
-  <div class="lesson-cardS">
+  <div class="lesson-cardS" @click="jumpToStudentPage">
     <el-card :class="'box-card ' + classData.color" shadow="hover">
       <div class="left">
         <div class="top">
@@ -8,7 +8,9 @@
         </div>
         <div class="bottom">
           <span class="avatorContainer">
-            <span class="teacherName">{{ classData.course.teacher }}</span></span
+            <span class="teacherName">{{
+              classData.course.teacher
+            }}</span></span
           >
           <span>
             <el-icon color="#fff" :size="18"><home-filled /></el-icon>
@@ -20,7 +22,7 @@
         <el-dropdown
           ><el-icon color="#fff" :size="22"><more-filled /></el-icon>
           <template #dropdown>
-            <el-dropdown-menu style="padding: 5px 0;">
+            <el-dropdown-menu style="padding: 5px 0">
               <el-dropdown-item @click="logoutClass()">退出</el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -28,10 +30,26 @@
       </div>
     </el-card>
     <div class="mark">
-      <img v-if="classData.color == 'style0'" :src="require('@/assets/img/mark0.png')" alt="mark" />
-      <img v-else-if="classData.color == 'style1'" :src="require('@/assets/img/mark1.png')" alt="mark" />
-      <img v-else-if="classData.color == 'style2'" :src="require('@/assets/img/mark2.png')" alt="mark" />
-      <img v-else-if="classData.color == 'style3'" :src="require('@/assets/img/mark3.png')" alt="mark" />
+      <img
+        v-if="classData.color == 'style0'"
+        :src="require('@/assets/img/mark0.png')"
+        alt="mark"
+      />
+      <img
+        v-else-if="classData.color == 'style1'"
+        :src="require('@/assets/img/mark1.png')"
+        alt="mark"
+      />
+      <img
+        v-else-if="classData.color == 'style2'"
+        :src="require('@/assets/img/mark2.png')"
+        alt="mark"
+      />
+      <img
+        v-else-if="classData.color == 'style3'"
+        :src="require('@/assets/img/mark3.png')"
+        alt="mark"
+      />
     </div>
   </div>
 </template>
@@ -40,16 +58,20 @@
 export default {
   name: "StudentLessonCard",
   props: {
-    classData: Object
+    classData: Object,
   },
+  
   data() {
     return {};
   },
   methods: {
     logoutClass() {
-      console.warn('logOut');
-    }
-  }
+      console.warn("logOut");
+    },
+    jumpToStudentPage() {
+      this.$router.push("/home/studentLog/" + this.classData.id);
+    },
+  },
 };
 </script>
 
