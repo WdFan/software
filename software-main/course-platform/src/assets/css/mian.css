@@ -289,3 +289,7 @@ a {
   border: 1px solid #5096F5;
   color: #5096F5;
 }
+
+.index .nowrap {
+  white-space: nowrap;
+}

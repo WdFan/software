@@ -5,13 +5,13 @@
         <h3>{{ lessonData.name }}</h3>
         <div class="buttonGroup">
           <el-tooltip content="编辑"
-            ><el-icon :size="18" color="#9b9b9b"><edit /></el-icon
+            ><el-icon @click="editLesson" :size="18" color="#9b9b9b"><edit /></el-icon
           ></el-tooltip>
           <el-tooltip content="添加"
-            ><el-icon :size="18" color="#9b9b9b"><plus /></el-icon
+            ><el-icon @click="addClass" :size="18" color="#9b9b9b"><plus /></el-icon
           ></el-tooltip>
           <el-tooltip content="删除"
-            ><el-icon :size="18" color="#9b9b9b"><delete /></el-icon
+            ><el-icon @click="deleteLesson" :size="18" color="#9b9b9b"><delete /></el-icon
           ></el-tooltip>
         </div>
       </el-col>
@@ -41,7 +41,7 @@
           :lg="8"
           :xl="6"
         >
-          <blank-card></blank-card>
+          <blank-card @click="addClass"></blank-card>
         </el-col>
       </el-row>
     </div>
@@ -61,9 +61,15 @@ export default {
     return {};
   },
   methods: {
-    logoutClass() {
-      console.warn("logOut");
+    editLesson() {
+      console.warn("EditLesson");
     },
+    addClass() {
+      this.$emit('addClass', this.lessonData.id);
+    },
+    deleteLesson() {
+      console.warn("DeleteLesson");
+    }
   },
 };
 </script>

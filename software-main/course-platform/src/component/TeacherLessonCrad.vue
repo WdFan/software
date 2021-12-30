@@ -23,6 +23,7 @@
           ><el-icon color="#fff" :size="22"><more-filled /></el-icon>
           <template #dropdown>
             <el-dropdown-menu style="padding: 5px 0">
+              <el-dropdown-item @click="editClass">编辑</el-dropdown-item>
               <el-dropdown-item @click="deleteClass">删除</el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -64,6 +65,9 @@ export default {
     return {};
   },
   methods: {
+    editClass() {
+      console.warn("Edit!");
+    },
     deleteClass() {
       console.warn("Delete!");
     },

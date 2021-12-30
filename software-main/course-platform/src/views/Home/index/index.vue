@@ -7,6 +7,7 @@
             v-for="teachData in this.$store.state.userTeachData"
             :lesson-data="teachData"
             :key="teachData.id"
+            @addClass="showAddClass"
           >
           </teacher-container>
         </div>
@@ -63,9 +64,7 @@
               @input="joinClassChange"
             ></el-input>
           </el-form-item>
-          <div class="input-tips c9b">
-            请输入班级邀请码/课堂暗号
-          </div>
+          <div class="input-tips c9b">请输入班级邀请码/课堂暗号</div>
         </el-form>
         <div class="flexbox buttonGroup">
           <button class="cancel" @click="closeClassDialog">取消</button>
@@ -128,6 +127,75 @@
     </el-dialog>
 
     <el-dialog
+      v-model="createClassDialog"
+      width="460px"
+      top="calc(50vh - 230px)"
+      custom-class="specialDialog createClassDialog editClassDialog"
+    >
+      <template #title>
+        <span class="dialog-header"
+          ><span>新增班级</span>
+          <span @click="closeCreateClassDialog">取消</span></span
+        >
+      </template>
+
+      <div class="dialog-body">
+        <el-form :model="createClassForm" class="commonForm">
+          <el-form-item>
+            <template #label
+              ><div>
+                <span class="name">班级名称</span>
+                <span class="fill">必填</span>
+              </div></template
+            >
+            <el-input
+              @input="createClassChange"
+              v-model="createClassForm.name"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <template #label
+              ><div>
+                <span class="name">开学学期</span>
+              </div></template
+            >
+            <el-row :gutter="10">
+              <el-col :xs="9" :sm="9" :md="9" :lg="9"
+                ><el-select v-model="createClassForm.year" placeholder="请选择">
+                  <el-option
+                    v-for="year in classYearOptions"
+                    :key="year"
+                    :value="year"
+                  ></el-option> </el-select
+              ></el-col>
+              <el-col :xs="5" :sm="5" :md="5" :lg="5"
+                ><span class="nowrap">学年度</span></el-col
+              >
+              <el-col :xs="10" :sm="10" :md="10" :lg="10"
+                ><el-select
+                  v-model="createClassForm.season"
+                  placeholder="请选择"
+                >
+                  <el-option
+                    v-for="season in classSeasonOptions"
+                    :key="season"
+                    :value="season"
+                  ></el-option> </el-select
+              ></el-col>
+            </el-row>
+          </el-form-item>
+        </el-form>
+        <button
+          :disabled="createClassButton"
+          @click="doCreateClass"
+          class="createButton"
+        >
+          确认
+        </button>
+      </div>
+    </el-dialog>
+
+    <el-dialog
       v-model="quitClassDialog"
       custom-class="warningDialog"
       width="350px"
@@ -176,6 +244,7 @@ export default {
       tabActiveName: "teach",
       joinClassDialog: false,
       createLessonDialog: false,
+      createClassDialog: false,
       quitClassDialog: false,
       joinClassForm: {
         classCode: null,
@@ -184,8 +253,18 @@ export default {
         lessonName: null,
         lessonSimpleName: null,
       },
+      createClassForm: {
+        name: null,
+        year: null,
+        season: null,
+        color: null,
+        lessonId: null,
+      },
+      classYearOptions: [],
+      classSeasonOptions: ["春", "夏", "秋", "冬"],
       addClassButton: "disabled",
       createLessonButton: "disabled",
+      createClassButton: "disabled",
       quitClassInfo: null,
     };
   },
@@ -200,6 +279,10 @@ export default {
       this.tabActiveName = this.$store.state.home_index_tab;
     } else {
       this.getData();
+    }
+    let nowYear = this.$dayjs().year();
+    for (let i = 0; i < 5; ++i) {
+      this.classYearOptions.push(nowYear + i);
     }
   },
   computed: {
@@ -243,13 +326,13 @@ export default {
       }
     },
     studentJoinClass() {
-      api.joinClass(this.userInfo.username, this.joinClassForm).then(res => {
-        if(res.data.code == 200) {
+      api.joinClass(this.userInfo.username, this.joinClassForm).then((res) => {
+        if (res.data.code == 200) {
           ElMessage.success(res.data.msg);
         } else {
           ElMessage.error(res.data.error);
         }
-      })
+      });
       this.closeClassDialog();
     },
     closeClassDialog() {
@@ -263,6 +346,14 @@ export default {
       this.createLessonForm.lessonSimpleName = null;
       this.createLessonButton = "disabled";
     },
+    closeCreateClassDialog() {
+      this.createClassDialog = false;
+      this.createClassForm.name = null;
+      this.createClassForm.year = null;
+      this.createClassForm.season = null;
+      this.createClassForm.lessonId = null;
+      this.createClassButton = "disabled";
+    },
     createLessonChange(value) {
       if (value && value.length > 0) {
         this.createLessonButton = null;
@@ -270,8 +361,14 @@ export default {
         this.createLessonButton = "disabled";
       }
     },
+    createClassChange(value) {
+      if (value && value.length > 0) {
+        this.createClassButton = null;
+      } else {
+        this.createClassButton = "disabled";
+      }
+    },
     doCreateLesson() {
-      console.log(this.createLessonForm);
       api
         .createLesson(this.userInfo.username, this.createLessonForm)
         .then((res) => {
@@ -280,6 +377,17 @@ export default {
           });
         });
       this.closeCreateLessonDialog();
+    },
+    showAddClass(lessonId) {
+      this.createClassDialog = true;
+      this.createClassForm.lessonId = lessonId;
+    },
+    doCreateClass() {
+      this.createClassForm.color = "style" + Math.floor(Math.random() * 4);
+      api.createClass(this.createClassForm).then((res) => {
+        console.log(res);
+        ElMessage.success("班级添加成功!");
+      });
     },
     quitClassM(classInfo) {
       this.quitClassInfo = classInfo;
@@ -509,5 +617,23 @@ export default {
 .TcardGroup .studentCol {
   margin-bottom: 30px;
   padding: 0 20px;
+}
+
+.specialDialog.createClassDialog .dialog-body .createButton {
+  margin-top: 40px;
+  width: 200px;
+  height: 40px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  background-color: #4f95f5;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+}
+
+.specialDialog.createClassDialog .dialog-body .createButton:disabled {
+  color: #9b9b9b;
+  background-color: #ddd;
 }
 </style>

@@ -1,3 +1,5 @@
+加入班级那个api返回的data里放下学生最新的课表
+
 quiteClass: (username, classId) => {return axios.post('/api/quitclass/', {'username': username, 'classId': classId})},
 code msg
 
