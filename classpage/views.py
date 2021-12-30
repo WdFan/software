@@ -98,10 +98,7 @@ class joinBanjiView(APIView):
         if banjiobj is None:
             return Response({'error':'该班级对象不存在'})
         serializer = banjiserializer(banjiobj)
-        if banjiobj.student is None:
-            banjiobj.student.add(studentobj)
-        else:
-            return Response({'code':400,'msg':'您已经加入到班级中，不可重复加入'})
+        banjiobj.student.add(studentobj)
         #if serializer.is_valid():
         #    serializer.instance.student.add(studentobj)
         #    serializer.save()
@@ -116,7 +113,7 @@ class getclassListView(APIView):
         #根据学生查找所在在的班级
         student = loginUser.objects.all().filter(username=username).first()
         if student is None:
-            return Response({'errot':'该学生不存在'})
+            return Response({'error':'该学生不存在'})
         #查找该学生的班级
         banjis = banjiserializer1(student.banji,many=True)
         return Response(banjis.data)

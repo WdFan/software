@@ -64,7 +64,7 @@
             ></el-input>
           </el-form-item>
           <div class="input-tips c9b">
-            请输入班级邀请码/课堂暗号(不区分大小写)
+            请输入班级邀请码/课堂暗号
           </div>
         </el-form>
         <div class="flexbox buttonGroup">
@@ -243,7 +243,13 @@ export default {
       }
     },
     studentJoinClass() {
-      console.warn(this.joinClassForm.classCode);
+      api.joinClass(this.userInfo.username, this.joinClassForm).then(res => {
+        if(res.data.code == 200) {
+          ElMessage.success(res.data.msg);
+        } else {
+          ElMessage.error(res.data.error);
+        }
+      })
       this.closeClassDialog();
     },
     closeClassDialog() {
