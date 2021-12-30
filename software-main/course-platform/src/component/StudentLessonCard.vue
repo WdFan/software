@@ -23,7 +23,7 @@
           ><el-icon color="#fff" :size="22"><more-filled /></el-icon>
           <template #dropdown>
             <el-dropdown-menu style="padding: 5px 0">
-              <el-dropdown-item @click="logoutClass()">退出</el-dropdown-item>
+              <el-dropdown-item @click="quitClass">退出</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -60,13 +60,12 @@ export default {
   props: {
     classData: Object,
   },
-  
   data() {
     return {};
   },
   methods: {
-    logoutClass() {
-      console.warn("logOut");
+    quitClass() {
+      this.$emit('clickQuitButton', this.classData);
     },
     jumpToStudentPage() {
       this.$router.push("/home/studentLog/" + this.classData.id);

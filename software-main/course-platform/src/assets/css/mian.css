@@ -231,3 +231,57 @@ a {
 .blank-card .box-card .el-card__body .container:hover>i {
   color: #5096F5;
 }
+
+.warningDialog .el-dialog__header {
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: bold;
+  text-align: center;
+  padding: 30px 0 10px;
+}
+
+.warningDialog .el-dialog__body, .warningDialog .el-dialog__footer {
+  padding: 0;
+  text-align: center;
+}
+
+.warningDialog .word-container {
+  margin: 0 30px 30px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.warningDialog .word-container span {
+  text-align: center;
+  display: inline-block;
+  max-width: 280px;
+  font-size: 16px;
+  color: #666;
+  word-break: break-word;
+}
+
+.warningDialog .dialog-footer {
+  padding-bottom: 40px;
+  display: inline-block;
+}
+
+.warningDialog .dialog-footer button {
+  width: 100px;
+  height: 34px;
+  border: none;
+  border-radius: 17px;
+  font-size: 14px;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+}
+
+.warningDialog .dialog-footer button.confirm {
+  margin-right: 15px;
+}
+
+.warningDialog .dialog-footer button.cancel {
+  margin-left: 15px;
+  border: 1px solid #5096F5;
+  color: #5096F5;
+}

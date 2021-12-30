@@ -13,7 +13,11 @@
       </el-tab-pane>
       <el-tab-pane label="我听的课" name="study">
         <div class="TcardGroup">
-          <el-row class="grid" v-if="this.$store.state.userStudyData" v-loading="loading2">
+          <el-row
+            class="grid"
+            v-if="this.$store.state.userStudyData"
+            v-loading="loading2"
+          >
             <el-col
               v-for="studyData in this.$store.state.userStudyData"
               :key="studyData.id"
@@ -26,6 +30,7 @@
             >
               <student-lesson-card
                 :class-data="studyData"
+                @clickQuitButton="quitClassM"
               ></student-lesson-card>
             </el-col>
           </el-row>
@@ -121,6 +126,24 @@
         </button>
       </div>
     </el-dialog>
+
+    <el-dialog
+      v-model="quitClass"
+      custom-class="warningDialog"
+      width="350px"
+      top="calc(50vh - 170px)"
+    >
+      <template #title><span class="dialog-header">提示</span></template>
+      <div class="word-container">
+        <span>该操作将退出班级，确定退出吗？</span>
+      </div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button class="confirm" type="danger" round>退出</el-button>
+          <el-button class="cancel" round>取消</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -138,6 +161,7 @@ export default {
       tabActiveName: "teach",
       joinClass: false,
       createLesson: false,
+      quitClass: false,
       joinClassForm: {
         classId: null,
       },
@@ -156,6 +180,10 @@ export default {
     },
   },
   created() {
+    let test = this.$dayjs('2021-12-01 19:30:25').unix();
+    console.warn(test);
+    let test2 = this.$dayjs.unix(test).format('YYYY-MM-DD HH:mm:ss');
+    console.warn(test2);
     if (this.tabActiveName != this.$store.state.home_index_tab) {
       this.tabActiveName = this.$store.state.home_index_tab;
     } else {
@@ -218,6 +246,14 @@ export default {
     doCreateLesson() {
       console.warn(this.createLessonForm);
       this.closeCreateLessonDialog();
+    },
+    quitClassM(value) {
+      api.quiteClass(this.$store.state.user_info.username, value.id).then(res => {
+        if (res.data.code == 200) {
+          this.$router.go(0);
+        }
+      });
+      this.$router.go(0);
     },
   },
 };
