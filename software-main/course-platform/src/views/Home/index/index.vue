@@ -59,7 +59,7 @@
               type="text"
               :maxlength="6"
               :autofocus="true"
-              v-model="joinClassForm.classId"
+              v-model="joinClassForm.classCode"
               @input="joinClassChange"
             ></el-input>
           </el-form-item>
@@ -139,7 +139,13 @@
       </div>
       <template #footer>
         <span class="dialog-footer">
-          <el-button class="confirm" type="danger" round @click="confirmQuitClass">退出</el-button>
+          <el-button
+            class="confirm"
+            type="danger"
+            round
+            @click="confirmQuitClass"
+            >退出</el-button
+          >
           <el-button
             class="cancel"
             round
@@ -172,7 +178,7 @@ export default {
       createLessonDialog: false,
       quitClassDialog: false,
       joinClassForm: {
-        classId: null,
+        classCode: null,
       },
       createLessonForm: {
         lessonName: null,
@@ -196,6 +202,11 @@ export default {
       this.getData();
     }
   },
+  computed: {
+    userInfo() {
+      return this.$store.state.user_info;
+    },
+  },
   methods: {
     joinClassChange(value) {
       if (value && value.length > 0) {
@@ -210,7 +221,7 @@ export default {
         this.$store.state.userTeachData === null
       ) {
         this.loading1 = true;
-        api.getTeachClass(this.$store.state.user_info.username).then((res) => {
+        api.getTeachClass(this.userInfo.username).then((res) => {
           this.$store.state.userTeachData = res.data.sort((l, r) => {
             return r.id - l.id;
           });
@@ -222,7 +233,7 @@ export default {
         this.$store.state.userStudyData === null
       ) {
         this.loading2 = true;
-        api.getStudyClass(this.$store.state.user_info.username).then((res) => {
+        api.getStudyClass(this.userInfo.username).then((res) => {
           this.$store.state.userStudyData = res.data.sort((l, r) => {
             return r.id - l.id;
           });
@@ -232,12 +243,12 @@ export default {
       }
     },
     studentJoinClass() {
-      console.warn(this.joinClassForm.classId);
+      console.warn(this.joinClassForm.classCode);
       this.closeClassDialog();
     },
     closeClassDialog() {
       this.joinClassDialog = false;
-      this.joinClassForm.classId = null;
+      this.joinClassForm.classCode = null;
       this.addClassButton = "disabled";
     },
     closeCreateLessonDialog() {
@@ -254,7 +265,14 @@ export default {
       }
     },
     doCreateLesson() {
-      console.warn(this.createLessonForm);
+      console.log(this.createLessonForm);
+      api
+        .createLesson(this.userInfo.username, this.createLessonForm)
+        .then((res) => {
+          this.$store.state.userTeachData = res.data.sort((l, r) => {
+            return r.id - l.id;
+          });
+        });
       this.closeCreateLessonDialog();
     },
     quitClassM(classInfo) {
@@ -262,17 +280,19 @@ export default {
       this.quitClassDialog = true;
     },
     confirmQuitClass() {
-      api.quiteClass(this.$store.state.user_info.username, this.quitClassInfo.id).then(res => {
-        if(res.data.code == 200) {
-          this.quitClassDialog = false;
-          ElMessage.success(res.data.msg);
-        } else {
-          this.quitClassDialog = false;
-          ElMessage.error(res.data.msg);
-        }
-      });
+      api
+        .quiteClass(this.userInfo.username, this.quitClassInfo.id)
+        .then((res) => {
+          if (res.data.code == 200) {
+            this.quitClassDialog = false;
+            ElMessage.success(res.data.msg);
+          } else {
+            this.quitClassDialog = false;
+            ElMessage.error(res.data.msg);
+          }
+        });
       this.quitClassInfo = null;
-    }
+    },
   },
 };
 </script>

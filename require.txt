@@ -9,6 +9,7 @@ code msg
 
 deleteLesson: (lessonId) => {return axios.post('api/deleteLesson/', {'lessonId': lessonId})},
 code msg
+删除课程要把课程里所有班级删除
 
 getClassMessage: (classId) => {return axios.post('/api/getClassMessage/', {'classId': classId})}
 code messageList[{createTime: Number, title: String, msg: }, {createTime: Number, title: String, msg: }, ...]
