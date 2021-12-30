@@ -240,6 +240,10 @@ a {
   padding: 30px 0 10px;
 }
 
+.warningDialog .el-dialog__header>button {
+  display: none;
+}
+
 .warningDialog .el-dialog__body, .warningDialog .el-dialog__footer {
   padding: 0;
   text-align: center;

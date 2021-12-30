@@ -39,13 +39,13 @@
     </el-tabs>
 
     <div class="headerButtonGroup">
-      <span @click="joinClass = true">加入班级</span>
-      <span @click="createLesson = true"
+      <span @click="joinClassDialog = true">加入班级</span>
+      <span @click="createLessonDialog = true"
         ><el-icon :size="14"><plus /></el-icon>创建课程</span
       >
     </div>
     <el-dialog
-      v-model="joinClass"
+      v-model="joinClassDialog"
       title="加入班级"
       center
       width="350px"
@@ -81,7 +81,7 @@
     </el-dialog>
 
     <el-dialog
-      v-model="createLesson"
+      v-model="createLessonDialog"
       width="460px"
       top="calc(50vh - 255px)"
       custom-class="specialDialog createLessonDialog editLessonDialog"
@@ -128,7 +128,7 @@
     </el-dialog>
 
     <el-dialog
-      v-model="quitClass"
+      v-model="quitClassDialog"
       custom-class="warningDialog"
       width="350px"
       top="calc(50vh - 170px)"
@@ -139,8 +139,16 @@
       </div>
       <template #footer>
         <span class="dialog-footer">
-          <el-button class="confirm" type="danger" round>退出</el-button>
-          <el-button class="cancel" round>取消</el-button>
+          <el-button class="confirm" type="danger" round @click="confirmQuitClass">退出</el-button>
+          <el-button
+            class="cancel"
+            round
+            @click="
+              quitClassDialog = false;
+              quitClassInfo = null;
+            "
+            >取消</el-button
+          >
         </span>
       </template>
     </el-dialog>
@@ -148,6 +156,7 @@
 </template>
 
 <script>
+import { ElMessage } from "element-plus";
 import api from "../../../api/api";
 import StudentLessonCard from "../../../component/StudentLessonCard.vue";
 import TeacherContainer from "../../../component/TeacherContainer.vue";
@@ -159,9 +168,9 @@ export default {
       loading1: false,
       loading2: false,
       tabActiveName: "teach",
-      joinClass: false,
-      createLesson: false,
-      quitClass: false,
+      joinClassDialog: false,
+      createLessonDialog: false,
+      quitClassDialog: false,
       joinClassForm: {
         classId: null,
       },
@@ -171,6 +180,7 @@ export default {
       },
       addClassButton: "disabled",
       createLessonButton: "disabled",
+      quitClassInfo: null,
     };
   },
   watch: {
@@ -180,10 +190,6 @@ export default {
     },
   },
   created() {
-    let test = this.$dayjs('2021-12-01 19:30:25').unix();
-    console.warn(test);
-    let test2 = this.$dayjs.unix(test).format('YYYY-MM-DD HH:mm:ss');
-    console.warn(test2);
     if (this.tabActiveName != this.$store.state.home_index_tab) {
       this.tabActiveName = this.$store.state.home_index_tab;
     } else {
@@ -205,7 +211,9 @@ export default {
       ) {
         this.loading1 = true;
         api.getTeachClass(this.$store.state.user_info.username).then((res) => {
-          this.$store.state.userTeachData = res.data;
+          this.$store.state.userTeachData = res.data.sort((l, r) => {
+            return r.id - l.id;
+          });
           // console.warn(res.data);
           this.loading1 = false;
         });
@@ -215,7 +223,9 @@ export default {
       ) {
         this.loading2 = true;
         api.getStudyClass(this.$store.state.user_info.username).then((res) => {
-          this.$store.state.userStudyData = res.data;
+          this.$store.state.userStudyData = res.data.sort((l, r) => {
+            return r.id - l.id;
+          });
           // console.warn(res.data);
           this.loading2 = false;
         });
@@ -226,12 +236,12 @@ export default {
       this.closeClassDialog();
     },
     closeClassDialog() {
-      this.joinClass = false;
+      this.joinClassDialog = false;
       this.joinClassForm.classId = null;
       this.addClassButton = "disabled";
     },
     closeCreateLessonDialog() {
-      this.createLesson = false;
+      this.createLessonDialog = false;
       this.createLessonForm.lessonName = null;
       this.createLessonForm.lessonSimpleName = null;
       this.createLessonButton = "disabled";
@@ -247,14 +257,22 @@ export default {
       console.warn(this.createLessonForm);
       this.closeCreateLessonDialog();
     },
-    quitClassM(value) {
-      api.quiteClass(this.$store.state.user_info.username, value.id).then(res => {
-        if (res.data.code == 200) {
-          this.$router.go(0);
+    quitClassM(classInfo) {
+      this.quitClassInfo = classInfo;
+      this.quitClassDialog = true;
+    },
+    confirmQuitClass() {
+      api.quiteClass(this.$store.state.user_info.username, this.quitClassInfo.id).then(res => {
+        if(res.data.code == 200) {
+          this.quitClassDialog = false;
+          ElMessage.success(res.data.msg);
+        } else {
+          this.quitClassDialog = false;
+          ElMessage.error(res.data.msg);
         }
       });
-      this.$router.go(0);
-    },
+      this.quitClassInfo = null;
+    }
   },
 };
 </script>
