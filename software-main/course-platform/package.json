@@ -11,6 +11,7 @@
     "@element-plus/icons-vue": "^0.2.4",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
+    "dayjs": "^1.10.7",
     "element-plus": "^1.0.2-beta.28",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
