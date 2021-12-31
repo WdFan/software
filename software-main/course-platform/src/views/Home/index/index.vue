@@ -10,6 +10,8 @@
             @addClass="showAddClass"
             @editClass="editClass"
             @editLesson="editLesson"
+            @deleteLesson="deleteLesson"
+            @deleteClass="deleteClass"
           >
           </teacher-container>
         </div>
@@ -33,7 +35,7 @@
             >
               <student-lesson-card
                 :class-data="studyData"
-                @clickQuitButton="quitClassM"
+                @clickQuitButton="quitClass"
               ></student-lesson-card>
             </el-col>
           </el-row>
@@ -201,35 +203,22 @@
     </el-dialog>
 
     <el-dialog
-      v-model="quitClassDialog"
+      v-model="showWaringDialog"
       custom-class="warningDialog"
       width="350px"
       top="calc(50vh - 170px)"
-      @closed="
-        quitClassDialog = false;
-        quitClassInfo = null;
-      "
+      @closed="closeWarningDialog"
     >
       <template #title><span class="dialog-header">提示</span></template>
       <div class="word-container">
-        <span>该操作将退出班级，确定退出吗？</span>
+        <span>{{ warningDialog.warningInfo[warningDialog.type] }}</span>
       </div>
       <template #footer>
         <span class="dialog-footer">
-          <el-button
-            class="confirm"
-            type="danger"
-            round
-            @click="confirmQuitClass"
+          <el-button class="confirm" type="danger" round @click="confirmWarning"
             >退出</el-button
           >
-          <el-button
-            class="cancel"
-            round
-            @click="
-              quitClassDialog = false;
-              quitClassInfo = null;
-            "
+          <el-button class="cancel" round @click="closeWarningDialog"
             >取消</el-button
           >
         </span>
@@ -256,7 +245,6 @@ export default {
       createClassDialog: false,
       classDialogTitle: "新增班级",
       lessonDialogTitle: "创建课程",
-      quitClassDialog: false,
       joinClassForm: {
         classCode: null,
       },
@@ -276,9 +264,18 @@ export default {
       addClassButton: "disabled",
       createLessonButton: "disabled",
       createClassButton: "disabled",
-      quitClassInfo: null,
       editClassId: null,
       editLessonId: null,
+      showWaringDialog: false,
+      warningDialog: {
+        warningInfo: [
+          "该操作将退出班级，确定退出吗？",
+          "课程删除后，该课程所有班级将被删除确认删除吗？",
+          "该操作将清空该班级所有教学数据，确定删除吗？",
+        ],
+        type: null,
+        id: null,
+      },
     };
   },
   watch: {
@@ -442,23 +439,43 @@ export default {
       this.createClassDialog = true;
       console.warn(classData);
     },
-    quitClassM(classInfo) {
-      this.quitClassInfo = classInfo;
-      this.quitClassDialog = true;
+    quitClass(classInfo) {
+      this.warningDialog.type = 0;
+      this.warningDialog.id = classInfo.id;
+      this.showWaringDialog = true;
     },
-    confirmQuitClass() {
-      api
-        .quiteClass(this.userInfo.username, this.quitClassInfo.id)
-        .then((res) => {
-          if (res.data.code == 200) {
-            this.quitClassDialog = false;
-            ElMessage.success(res.data.msg);
-          } else {
-            this.quitClassDialog = false;
-            ElMessage.error(res.data.msg);
-          }
+    deleteLesson(lessonId) {
+      this.warningDialog.type = 1;
+      this.warningDialog.id = lessonId;
+      this.showWaringDialog = true;
+    },
+    deleteClass(classId) {
+      this.warningDialog.type = 2;
+      this.warningDialog.id = classId;
+      this.showWaringDialog = true;
+    },
+    closeWarningDialog() {
+      this.showWaringDialog = false;
+      this.warningDialog.type = null;
+      this.warningDialog.id = null;
+    },
+    confirmWarning() {
+      if (this.warningDialog.type == 0) {
+        api
+          .quitClass(this.userInfo.username, this.warningDialog.id)
+          .then((res) => {
+            console.log(res);
+          });
+      } else if (this.warningDialog.type == 1) {
+        api.deleteLesson(this.warningDialog.id).then((res) => {
+          console.log(res);
         });
-      this.quitClassInfo = null;
+      } else if (this.warningDialog.type == 2) {
+        api.deleteClass(this.warningDialog.id).then((res) => {
+          console.log(res);
+        });
+      }
+      this.closeWarningDialog();
     },
   },
 };

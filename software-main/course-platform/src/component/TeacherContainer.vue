@@ -5,13 +5,16 @@
         <h3>{{ lessonData.name }}</h3>
         <div class="buttonGroup">
           <el-tooltip content="编辑"
-            ><el-icon @click="editLesson" :size="18" color="#9b9b9b"><edit /></el-icon
+            ><el-icon @click="editLesson" :size="18" color="#9b9b9b"
+              ><edit /></el-icon
           ></el-tooltip>
           <el-tooltip content="添加"
-            ><el-icon @click="addClass" :size="18" color="#9b9b9b"><plus /></el-icon
+            ><el-icon @click="addClass" :size="18" color="#9b9b9b"
+              ><plus /></el-icon
           ></el-tooltip>
           <el-tooltip content="删除"
-            ><el-icon @click="deleteLesson" :size="18" color="#9b9b9b"><delete /></el-icon
+            ><el-icon @click="deleteLesson" :size="18" color="#9b9b9b"
+              ><delete /></el-icon
           ></el-tooltip>
         </div>
       </el-col>
@@ -28,7 +31,11 @@
           :lg="8"
           :xl="6"
         >
-          <teacher-lesson-crad @editClass="editClass" :class-data="classdata"></teacher-lesson-crad>
+          <teacher-lesson-crad
+            @editClass="editClass"
+            @deleteClass="deleteClass"
+            :class-data="classdata"
+          ></teacher-lesson-crad>
         </el-col>
       </el-row>
       <el-row :gutter="40">
@@ -62,16 +69,19 @@ export default {
   },
   methods: {
     editLesson() {
-      this.$emit('editLesson', this.lessonData);
+      this.$emit("editLesson", this.lessonData);
     },
     editClass(classData) {
-      this.$emit('editClass', classData);
+      this.$emit("editClass", classData);
     },
     addClass() {
-      this.$emit('addClass', this.lessonData.id);
+      this.$emit("addClass", this.lessonData.id);
     },
     deleteLesson() {
-      console.warn("DeleteLesson");
+      this.$emit('deleteLesson', this.lessonData.id);
+    },
+    deleteClass(classId) {
+      this.$emit('deleteClass', classId);
     }
   },
 };

@@ -66,11 +66,12 @@ export default {
   },
   methods: {
     editClass() {
-      this.$emit('editClass', this.classData);
+      this.$emit("editClass", this.classData);
       // console.warn("EditClass!");
     },
     deleteClass() {
-      console.warn("Delete!");
+      // console.warn("Delete!");
+      this.$emit("deleteClass", this.classData.id);
     },
     jumpToTeacherPage() {
       this.$router.push("/home/teacherLog/" + this.classData.id);

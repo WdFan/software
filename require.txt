@@ -9,7 +9,7 @@ code msg data[1]
 editClass: (classId, classForm) => {return axios.post('/api/editClass/', {'classId': classId, 'classForm': classForm})},
 code msg data[1]
 
-quiteClass: (username, classId) => {return axios.post('/api/quitclass/', {'username': username, 'classId': classId})},
+quitClass: (username, classId) => {return axios.post('/api/quitclass/', {'username': username, 'classId': classId})},
 code msg data[1]
 
 getClassStudentInfo: (classId) => {return axios.post('/api/getclassStudentList/', {'classId': classId})},
