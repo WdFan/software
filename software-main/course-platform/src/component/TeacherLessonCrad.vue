@@ -66,7 +66,8 @@ export default {
   },
   methods: {
     editClass() {
-      console.warn("Edit!");
+      this.$emit('editClass', this.classData);
+      // console.warn("EditClass!");
     },
     deleteClass() {
       console.warn("Delete!");

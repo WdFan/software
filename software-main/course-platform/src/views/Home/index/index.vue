@@ -8,6 +8,8 @@
             :lesson-data="teachData"
             :key="teachData.id"
             @addClass="showAddClass"
+            @editClass="editClass"
+            @editLesson="editLesson"
           >
           </teacher-container>
         </div>
@@ -52,6 +54,7 @@
       width="350px"
       top="calc(50vh - 143px)"
       custom-class="specialDialog joinClassDialog"
+      @closed="closeClassDialog"
     >
       <div class="dialog-body">
         <el-form :model="joinClassForm" class="commonForm joinClassForm">
@@ -84,10 +87,11 @@
       width="460px"
       top="calc(50vh - 255px)"
       custom-class="specialDialog createLessonDialog editLessonDialog"
+      @closed="closeCreateLessonDialog"
     >
       <template #title>
         <span class="dialog-header"
-          ><span>创建课程</span>
+          ><span>{{ lessonDialogTitle }}</span>
           <span @click="closeCreateLessonDialog">取消</span></span
         >
       </template>
@@ -131,10 +135,11 @@
       width="460px"
       top="calc(50vh - 230px)"
       custom-class="specialDialog createClassDialog editClassDialog"
+      @closed="closeCreateClassDialog"
     >
       <template #title>
         <span class="dialog-header"
-          ><span>新增班级</span>
+          ><span>{{ classDialogTitle }}</span>
           <span @click="closeCreateClassDialog">取消</span></span
         >
       </template>
@@ -200,6 +205,10 @@
       custom-class="warningDialog"
       width="350px"
       top="calc(50vh - 170px)"
+      @closed="
+        quitClassDialog = false;
+        quitClassInfo = null;
+      "
     >
       <template #title><span class="dialog-header">提示</span></template>
       <div class="word-container">
@@ -245,6 +254,8 @@ export default {
       joinClassDialog: false,
       createLessonDialog: false,
       createClassDialog: false,
+      classDialogTitle: "新增班级",
+      lessonDialogTitle: "创建课程",
       quitClassDialog: false,
       joinClassForm: {
         classCode: null,
@@ -261,11 +272,13 @@ export default {
         lessonId: null,
       },
       classYearOptions: [],
-      classSeasonOptions: ["春", "夏", "秋", "冬"],
+      classSeasonOptions: ["春季", "夏季", "秋季", "冬季"],
       addClassButton: "disabled",
       createLessonButton: "disabled",
       createClassButton: "disabled",
       quitClassInfo: null,
+      editClassId: null,
+      editLessonId: null,
     };
   },
   watch: {
@@ -345,6 +358,8 @@ export default {
       this.createLessonForm.lessonName = null;
       this.createLessonForm.lessonSimpleName = null;
       this.createLessonButton = "disabled";
+      this.editLessonId = null;
+      this.lessonDialogTitle = "创建课程";
     },
     closeCreateClassDialog() {
       this.createClassDialog = false;
@@ -353,6 +368,8 @@ export default {
       this.createClassForm.season = null;
       this.createClassForm.lessonId = null;
       this.createClassButton = "disabled";
+      this.editClassId = null;
+      this.classDialogTitle = "新增班级";
     },
     createLessonChange(value) {
       if (value && value.length > 0) {
@@ -369,13 +386,20 @@ export default {
       }
     },
     doCreateLesson() {
-      api
-        .createLesson(this.userInfo.username, this.createLessonForm)
-        .then((res) => {
-          this.$store.state.userTeachData = res.data.sort((l, r) => {
-            return r.id - l.id;
-          });
+      if (this.editLessonId) {
+        api.editLesson(this.editLessonId, this.createLessonForm).then((res) => {
+          console.log(res);
+          ElMessage.success("编辑课程成功");
         });
+      } else {
+        api
+          .createLesson(this.userInfo.username, this.createLessonForm)
+          .then((res) => {
+            this.$store.state.userTeachData = res.data.sort((l, r) => {
+              return r.id - l.id;
+            });
+          });
+      }
       this.closeCreateLessonDialog();
     },
     showAddClass(lessonId) {
@@ -383,11 +407,40 @@ export default {
       this.createClassForm.lessonId = lessonId;
     },
     doCreateClass() {
-      this.createClassForm.color = "style" + Math.floor(Math.random() * 4);
-      api.createClass(this.createClassForm).then((res) => {
-        console.log(res);
-        ElMessage.success("班级添加成功!");
-      });
+      if (this.editClassId) {
+        api.editClass(this.editClassId, this.createClassForm).then((res) => {
+          console.log(res);
+          ElMessage.success("编辑班级成功");
+        });
+      } else {
+        this.createClassForm.color = "style" + Math.floor(Math.random() * 4);
+        api.createClass(this.createClassForm).then((res) => {
+          console.log(res);
+          ElMessage.success("班级添加成功!");
+        });
+      }
+      this.closeCreateClassDialog();
+    },
+    editLesson(lessonData) {
+      this.editLessonId = lessonData.id;
+      this.lessonDialogTitle = "编辑课程信息";
+      this.createLessonForm.lessonName = lessonData.name;
+      this.createLessonForm.lessonSimpleName = lessonData.simple_name;
+      this.createLessonButton = null;
+      this.createLessonDialog = true;
+      // console.warn(lessonData);
+    },
+    editClass(classData) {
+      this.editClassId = classData.id;
+      this.classDialogTitle = "编辑班级信息";
+      this.createClassForm.name =classData.name;
+      this.createClassForm.year = classData.year;
+      this.createClassForm.season = classData.season;
+      this.createClassForm.color = classData.color;
+      this.createClassForm.lessonId = classData.couid;
+      this.createClassButton = null;
+      this.createClassDialog = true;
+      console.warn(classData);
     },
     quitClassM(classInfo) {
       this.quitClassInfo = classInfo;

@@ -28,7 +28,7 @@
           :lg="8"
           :xl="6"
         >
-          <teacher-lesson-crad :class-data="classdata"></teacher-lesson-crad>
+          <teacher-lesson-crad @editClass="editClass" :class-data="classdata"></teacher-lesson-crad>
         </el-col>
       </el-row>
       <el-row :gutter="40">
@@ -62,7 +62,10 @@ export default {
   },
   methods: {
     editLesson() {
-      console.warn("EditLesson");
+      this.$emit('editLesson', this.lessonData);
+    },
+    editClass(classData) {
+      this.$emit('editClass', classData);
     },
     addClass() {
       this.$emit('addClass', this.lessonData.id);
