@@ -433,7 +433,7 @@ export default {
     editClass(classData) {
       this.editClassId = classData.id;
       this.classDialogTitle = "编辑班级信息";
-      this.createClassForm.name =classData.name;
+      this.createClassForm.name = classData.name;
       this.createClassForm.year = classData.year;
       this.createClassForm.season = classData.season;
       this.createClassForm.color = classData.color;
