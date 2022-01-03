@@ -1,7 +1,7 @@
 from classpage.models import banji,course
 from rest_framework import serializers
 from classpage.models import banji,course
-from login.serializer import loginUserserializer
+from login.serializer import loginUserserializer,loginUserserializer1
 #创建序列器
 class banjiserializer(serializers.ModelSerializer):
     #student = loginUserserializer(read_only=True)
@@ -22,7 +22,7 @@ class courseserializer(serializers.ModelSerializer):
     banji = banjiserializer(many=True,required=False)
     class Meta:
         model = course
-        fields='__all__'
+        fields= '__all__'
 
 
 class courseserializer1(serializers.ModelSerializer):
@@ -33,6 +33,7 @@ class courseserializer1(serializers.ModelSerializer):
     class Meta:
         model = course
         fields='__all__'
+#班级中包含课程数据
 class banjiserializer1(serializers.ModelSerializer):
     #student = loginUserserializer(read_only=True)
     #创建班级
@@ -44,5 +45,12 @@ class banjiserializer1(serializers.ModelSerializer):
     class Meta:
         model = banji
         fields = '__all__'
+
+#班级中包含学生数据
+class banjiserializer2(serializers.ModelSerializer):
+    student = loginUserserializer1(read_only=True,many=True)
+    class Meta:
+        model = banji
+        fields = ['student']
 
 

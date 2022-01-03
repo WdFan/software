@@ -19,6 +19,9 @@ urlpatterns = [
     path('joinbanji/',views.joinBanjiView.as_view(),name='joinbanji'),
 
     #查找该学生的所有班级 参数:username
-    path('getclassList/',views.getclassListView.as_view(),name='getclassList')
+    path('getclassList/',views.getclassListView.as_view(),name='getclassList'),
+
+    #查找某班级的所有学生
+    path('getclassstudentinfo/',views.getClassStudentInfoView.as_view(),name='getclassstudentinfo'),
 
 ]

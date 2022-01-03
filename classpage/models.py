@@ -6,12 +6,11 @@ class course(models.Model):
     #课程名称
     name = models.CharField(max_length=30)
     #课程简称
-    simple_name = models.CharField(max_length=16)
+    simple_name = models.CharField(max_length=16,blank=True)
     #color = models.CharField(max_length=50,blank=True)
     #banji = models.ForeignKey(banji,null=True,blank=True,on_delete=models.CASCADE,related_name='course')
     def __str__(self):
         return self.name
-
 
 class banji(models.Model):
 
@@ -25,7 +24,7 @@ class banji(models.Model):
     #班级名称
     name = models.CharField(max_length=20)
     #开设年份
-    year = models.IntegerField(max_length=4)
+    year = models.IntegerField()
     #开设季节
     season = models.CharField(max_length=2)
     #用来记录course的id号

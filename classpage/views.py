@@ -6,7 +6,7 @@ from login.models import loginUser
 from login.serializer import loginUserserializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from classpage.serializer import banjiserializer,courseserializer,banjiserializer1
+from classpage.serializer import banjiserializer,courseserializer,banjiserializer1,banjiserializer2
 from login.models import loginUser
 from classpage.models import banji,course
 import json
@@ -28,10 +28,10 @@ class createCourseView(APIView):
             teacher = self.request.data['teacher']
             courses = course.objects.filter(teacher=teacher)
             serial = courseserializer(courses,many=True)
-            return Response(serial.data,status=status.HTTP_200_OK)
+            return Response({'code':'200','data':serial.data})
         else:
             #数据提交失败
-            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response({'code':'400','data':'error'})
 
 
 class createBanjiView(APIView):
@@ -103,7 +103,9 @@ class joinBanjiView(APIView):
         #    serializer.instance.student.add(studentobj)
         #    serializer.save()
         banjiobj.save()
-        return Response({'code':200,'msg':'加入班级成功'})
+        student = loginUser.objects.all().filter(username=username).first()
+        banjis = banjiserializer1(student.banji, many=True)
+        return Response({'code':200,'data':banjis.data})
 
 class getclassListView(APIView):
     '''找到用户所听的课程'''
@@ -118,7 +120,17 @@ class getclassListView(APIView):
         banjis = banjiserializer1(student.banji,many=True)
         return Response(banjis.data)
 
-
+#根据班级id得到班级学生信息
+class getClassStudentInfoView(APIView):
+    '''根据班级id找到所有的学生'''
+    def post(self,requets):
+        #获取班级id，找到该班级的所有学生
+        id = self.request.data['id']
+        ban = banji.objects.all().filter(id = id).first()
+        if ban is None:
+            return Response({'code':400,'msg':'id不正确'})
+        serial = banjiserializer2(ban)
+        return Response({'code':'200','studentList':serial.data['student']})
 
 
 

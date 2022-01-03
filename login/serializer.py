@@ -6,3 +6,8 @@ class loginUserserializer(serializers.ModelSerializer):
         model = loginUser
         fields = ['username','stu_id','stu_name','stu_school']
 
+
+class loginUserserializer1(serializers.ModelSerializer):
+    class Meta:
+        model = loginUser
+        fields = '__all__'
