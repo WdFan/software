@@ -142,6 +142,8 @@ class getdbinfo(APIView):
     def post(self,request):
         print(cur)
         conn = getconn()
+        if conn is None:
+            return Response({'code':400,'msg':'数据库连接出错'})
         cursor = conn.cursor()
         sql = 'select * from users'
         values = cursor.execute(sql)
@@ -156,7 +158,8 @@ class getdbinfo(APIView):
             data.append(dic)
             dic = {}
         return Response({'code':'200','data':data})
-
+#class editLessonView(APIView):
+    #'''变成课程，并且返回最新的课程列表'''
 
 
 

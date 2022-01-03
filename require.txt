@@ -1,6 +1,6 @@
-问题？/api/createcourse/ simple_name我传null ""的时候后端返回给我报错，提示不能为空     需求：可以为空，甚至这个simple_name我就没用可以直接删
-学生加入班级api返回的data里放下学生最新的课表
-老师创建班级api返回data放老师最新班级列表
+#问题？/api/createcourse/ simple_name我传null ""的时候后端返回给我报错，提示不能为空     需求：可以为空，甚至这个simple_name我就没用可以直接删
+#学生加入班级api返回的data里放下学生最新的课表
+#老师创建班级api返回data放老师最新班级列表
 注：更改课程班级信息的最后都返回最新列表数据[1]
 
 editLesson: (lessonId, lessonForm) => {return axios.post('/api/editLesson/', {'lessonId': lessonId, 'lessonForm': lessonForm})},
@@ -12,7 +12,7 @@ code msg data[1]
 quitClass: (username, classId) => {return axios.post('/api/quitclass/', {'username': username, 'classId': classId})},
 code msg data[1]
 
-getClassStudentInfo: (classId) => {return axios.post('/api/getclassStudentList/', {'classId': classId})},
+#getClassStudentInfo: (classId) => {return axios.post('/api/getclassStudentList/', {'classId': classId})},
 code studentList:[stuent_info1,stuent_info2,{},{}...]
 
 deleteClass: (classId) => {return axios.post('/api/deleteClass/', {'classId': classId})},
