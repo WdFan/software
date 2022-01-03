@@ -12,6 +12,10 @@ from classpage.models import banji,course
 import json
 from collections import OrderedDict
 import random
+import sqlite3
+import os
+from dbconn import getconn
+cur = os.path.abspath(os.path.dirname(os.getcwd()))
 
 alphabet = 'ABCDEFGHIJKLMNOPQISTUVWXYZ'
 characters = ''.join(random.sample(alphabet, 5))
@@ -132,6 +136,26 @@ class getClassStudentInfoView(APIView):
         serial = banjiserializer2(ban)
         return Response({'code':'200','studentList':serial.data['student']})
 
+#获取db数据库中的信息
+class getdbinfo(APIView):
+    '''获取数据库中信息,将数据库中的返回'''
+    def post(self,request):
+        print(cur)
+        conn = getconn()
+        cursor = conn.cursor()
+        sql = 'select * from users'
+        values = cursor.execute(sql)
+        data = []
+        for i in values:
+            sid = i[0]
+            sname = i[1]
+            sign_time = i[2]
+            created_time = i[3]
+            face_id = i[4]
+            dic = {'sid': sid, 'sname': sname, 'sign_time': sign_time, 'created_time': created_time, 'face_id': face_id}
+            data.append(dic)
+            dic = {}
+        return Response({'code':'200','data':data})
 
 
 

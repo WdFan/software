@@ -24,4 +24,7 @@ urlpatterns = [
     #查找某班级的所有学生
     path('getclassstudentinfo/',views.getClassStudentInfoView.as_view(),name='getclassstudentinfo'),
 
+    #返回FaceBase.db的数据
+    path('getdbinfo/',views.getdbinfo.as_view(),name='getdbinfo'),
+
 ]
