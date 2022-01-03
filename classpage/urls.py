@@ -27,4 +27,7 @@ urlpatterns = [
     #返回FaceBase.db的数据
     path('getdbinfo/',views.getdbinfo.as_view(),name='getdbinfo'),
 
+    #修改课程信息
+    path('editLesson/',views.editLessonView.as_view(),name='editLesson'),
+
 ]

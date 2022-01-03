@@ -3,7 +3,7 @@
 #老师创建班级api返回data放老师最新班级列表
 注：更改课程班级信息的最后都返回最新列表数据[1]
 
-editLesson: (lessonId, lessonForm) => {return axios.post('/api/editLesson/', {'lessonId': lessonId, 'lessonForm': lessonForm})},
+#editLesson: (lessonId, lessonForm) => {return axios.post('/api/editLesson/', {'lessonId': lessonId, 'lessonForm': lessonForm})},
 code msg data[1]
 
 editClass: (classId, classForm) => {return axios.post('/api/editClass/', {'classId': classId, 'classForm': classForm})},

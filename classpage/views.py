@@ -6,7 +6,7 @@ from login.models import loginUser
 from login.serializer import loginUserserializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from classpage.serializer import banjiserializer,courseserializer,banjiserializer1,banjiserializer2
+from classpage.serializer import banjiserializer,courseserializer,banjiserializer1,banjiserializer2,courseserializer1
 from login.models import loginUser
 from classpage.models import banji,course
 import json
@@ -43,32 +43,27 @@ class createBanjiView(APIView):
     def post(self,request):
         #创建班级
         serializer = banjiserializer(data=self.request.data)
-        '''
-        if serializer.is_valid():
-            serializer.save()
-            #找到cou对象
-            couid = serializer.validated_data.get('couid')
-            cou = course.objects.filter(pk=couid).first()
-            #找到
-            id = serializer.validated_data.get('id')
-            ban = banji.objects.filter(pk=couid).first()
-            ban.course = cou
-            ban.save()
-            return Response({'code':200})
-        else:
-            return Response({'code':400})
-        '''
         if serializer.is_valid():
             serializer.save()
             #获取到课程号的id
             id = serializer.validated_data.get('couid')
             cou = course.objects.filter(pk=id).first()
+            teacher = cou.teacher
             serializer.instance.course = cou
             serializer.instance.code = characters
             serializer.save()
-            return Response(serializer.data,status=status.HTTP_200_OK)
+
+            #查找到teacher，查找该teacher的所有课程
+            courses = course.objects.filter(teacher=teacher)
+            ids = []
+            for c in courses:
+                ids.append(c.id)
+
+            classes = banji.objects.all().filter(couid__in = ids)
+            banjiserial = banjiserializer(classes,many=True)
+            return Response({'code':200,'msg':banjiserial.data})
         else:
-            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            return Response({'code':400,'msg':'数据非法'})
 
 
 #得到所交的班级
@@ -158,8 +153,38 @@ class getdbinfo(APIView):
             data.append(dic)
             dic = {}
         return Response({'code':'200','data':data})
-#class editLessonView(APIView):
-    #'''变成课程，并且返回最新的课程列表'''
+class editLessonView(APIView):
+    '''变成课程，并且返回最新的课程列表,进行更新操作'''
+    def put(self,request):
+        #获取id，根据id进行操作
+        lessonId = self.request.data['lessonId']
+        lessForm = self.request.data['lessonForm']
+        try:
+            lesson = course.objects.all().filter(id = lessonId).first()
+        except:
+            return Response({'code':400,'data':'lessonId不正确'})
+        lessonName = lessForm['lessonName']
+        lessonSimpleName = lessForm['lessonSimpleName']
+        #数据创建
+        lesson.name = lessonName
+        lesson.simple_name = lessonSimpleName
+        lesson.save()
+        serializer = courseserializer1(lesson)
+        teacher = serializer.data['teacher']
+        courses = course.objects.filter(teacher=teacher)
+        serial = courseserializer1(courses, many=True)
+        return Response({'code':'200','msg':serial.data})
+
+
+
+
+
+
+
+
+
+
+
 
 
 
