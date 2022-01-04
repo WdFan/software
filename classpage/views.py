@@ -52,7 +52,6 @@ class createBanjiView(APIView):
             serializer.instance.course = cou
             serializer.instance.code = characters
             serializer.save()
-
             #查找到teacher，查找该teacher的所有课程
             courses = course.objects.filter(teacher=teacher)
             ids = []
@@ -162,7 +161,7 @@ class editLessonView(APIView):
         try:
             lesson = course.objects.all().filter(id = lessonId).first()
         except:
-            return Response({'code':400,'data':'lessonId不正确'})
+            return Response({'code':400})
         lessonName = lessForm['lessonName']
         lessonSimpleName = lessForm['lessonSimpleName']
         #数据创建
@@ -173,13 +172,24 @@ class editLessonView(APIView):
         teacher = serializer.data['teacher']
         courses = course.objects.filter(teacher=teacher)
         serial = courseserializer1(courses, many=True)
-        return Response({'code':'200','msg':serial.data})
-
-
-
-
-
-
+        return Response({'code':'200','data':serial.data})
+class savePersonInfoView(APIView):
+    def post(self,request):
+        personInfoForm = self.request.data
+        username = personInfoForm['username']
+        stu_id = personInfoForm['stu_id']
+        stu_name = personInfoForm['stu_name']
+        stu_school = personInfoForm['stu_school']
+        #筛选出该用户
+        user = loginUser.objects.all().filter(username=username).first()
+        if user is None:
+            return Response({'code':400})
+        user.stu_id = stu_id
+        user.stu_name = stu_name
+        user.stu_school = stu_school
+        user.save()
+        serializer = loginUserserializer(user)
+        return  Response({'code':'200','data':serializer.data})
 
 
 

@@ -30,4 +30,7 @@ urlpatterns = [
     #修改课程信息
     path('editLesson/',views.editLessonView.as_view(),name='editLesson'),
 
+    #存储个人信息
+    path('savePersonInfo/',views.savePersonInfoView.as_view(),name = "savePersonInfo"),
+
 ]
