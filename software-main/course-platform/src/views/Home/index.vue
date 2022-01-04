@@ -434,12 +434,12 @@ export default {
         this.createClassForm.color = "style" + Math.floor(Math.random() * 4);
         api.createClass(this.createClassForm).then((res) => {
           if (res.data.code == 200) {
-            ElMessage.success("班级创建成功");
+            ElMessage.success("创建班级成功");
             this.$store.state.userTeachData = res.data.data.sort((l, r) => {
               return r.id - l.id;
             });
           } else {
-            ElMessage.error("班级创建失败");
+            ElMessage.error("创建班级失败");
           }
         });
       }
@@ -491,15 +491,36 @@ export default {
         api
           .quitClass(this.userInfo.username, this.warningDialog.id)
           .then((res) => {
-            console.log(res);
+            if (res.data.code == 200) {
+              this.$store.state.userStudyData = res.data.data.sort((l, r) => {
+                return r.id - l.id;
+              });
+              ElMessage.success("退出班级成功");
+            } else {
+              ElMessage.error("退出班级失败");
+            }
           });
       } else if (this.warningDialog.type == 1) {
         api.deleteLesson(this.warningDialog.id).then((res) => {
-          console.log(res);
+          if (res.data.code == 200) {
+            this.$store.state.userTeachData = res.data.data.sort((l, r) => {
+              return r.id - l.id;
+            });
+            ElMessage.success("删除课程成功");
+          } else {
+            ElMessage.error("删除课程失败");
+          }
         });
       } else if (this.warningDialog.type == 2) {
         api.deleteClass(this.warningDialog.id).then((res) => {
-          console.log(res);
+          if (res.data.code == 200) {
+            this.$store.state.userTeachData = res.data.data.sort((l, r) => {
+              return r.id - l.id;
+            });
+            ElMessage.success("删除班级成功");
+          } else {
+            ElMessage.error("删除班级失败");
+          }
         });
       }
       this.closeWarningDialog();

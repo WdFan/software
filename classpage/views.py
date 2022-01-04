@@ -136,7 +136,7 @@ class getClassStudentInfoView(APIView):
     '''根据班级id找到所有的学生'''
     def post(self,requets):
         #获取班级id，找到该班级的所有学生
-        id = self.request.data['id']
+        id = self.request.data['classId']
         ban = banji.objects.all().filter(id = id).first()
         if ban is None:
             return Response({'code':400,'msg':'id不正确'})
