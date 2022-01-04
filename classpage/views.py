@@ -175,7 +175,7 @@ class editLessonView(APIView):
         return Response({'code':'200','data':serial.data})
 class savePersonInfoView(APIView):
     def post(self,request):
-        personInfoForm = self.request.data
+        personInfoForm = self.request.data['personInfoForm']
         username = personInfoForm['username']
         stu_id = personInfoForm['stu_id']
         stu_name = personInfoForm['stu_name']
