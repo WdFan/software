@@ -226,6 +226,15 @@ class editClassView(APIView):
          return Response({'code':200,"data":banjiserial.data})
 
 
+class getClassInfoView(APIView):
+    '''获取班级信息'''
+    def post(self,request):
+        classId = self.request.data['classId']
+        ban = banji.objects.all().filter(id=classId).first()
+        if ban is None:
+            return Response({'code':400})
+        serializer = banjiserializer(ban)
+        return Response({'code':200,'data':serializer.data})
 
 
 
