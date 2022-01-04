@@ -157,6 +157,7 @@ class getdbinfo(APIView):
             data.append(dic)
             dic = {}
         return Response({'code':'200','data':data})
+
 class editLessonView(APIView):
     '''变成课程，并且返回最新的课程列表,进行更新操作'''
     def put(self,request):
@@ -176,8 +177,9 @@ class editLessonView(APIView):
         serializer = courseserializer1(lesson)
         teacher = serializer.data['teacher']
         courses = course.objects.filter(teacher=teacher)
-        serial = courseserializer1(courses, many=True)
+        serial = courseserializer(courses, many=True)
         return Response({'code':'200','data':serial.data})
+
 class savePersonInfoView(APIView):
     def post(self,request):
         personInfoForm = self.request.data['personInfoForm']
