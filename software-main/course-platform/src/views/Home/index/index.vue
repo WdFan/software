@@ -250,7 +250,7 @@ export default {
       },
       createLessonForm: {
         lessonName: null,
-        lessonSimpleName: null,
+        lessonSimpleName: "",
       },
       createClassForm: {
         name: null,
@@ -338,9 +338,12 @@ export default {
     studentJoinClass() {
       api.joinClass(this.userInfo.username, this.joinClassForm).then((res) => {
         if (res.data.code == 200) {
-          ElMessage.success(res.data.msg);
+          this.$store.state.userStudyData = res.data.data.sort((l, r) => {
+            return r.id - l.id;
+          });
+          ElMessage.success("加入成功");
         } else {
-          ElMessage.error(res.data.error);
+          ElMessage.error("加入失败");
         }
       });
       this.closeClassDialog();
@@ -353,7 +356,7 @@ export default {
     closeCreateLessonDialog() {
       this.createLessonDialog = false;
       this.createLessonForm.lessonName = null;
-      this.createLessonForm.lessonSimpleName = null;
+      this.createLessonForm.lessonSimpleName = "";
       this.createLessonButton = "disabled";
       this.editLessonId = null;
       this.lessonDialogTitle = "创建课程";
@@ -392,9 +395,14 @@ export default {
         api
           .createLesson(this.userInfo.username, this.createLessonForm)
           .then((res) => {
-            this.$store.state.userTeachData = res.data.sort((l, r) => {
-              return r.id - l.id;
-            });
+            if (res.data.code == 200) {
+              this.$store.state.userTeachData = res.data.data.sort((l, r) => {
+                return r.id - l.id;
+              });
+              ElMessage.success("创建课程成功");
+            } else {
+              ElMessage.error("创建课程失败");
+            }
           });
       }
       this.closeCreateLessonDialog();
@@ -413,7 +421,7 @@ export default {
         this.createClassForm.color = "style" + Math.floor(Math.random() * 4);
         api.createClass(this.createClassForm).then((res) => {
           console.log(res);
-          ElMessage.success("班级添加成功!");
+          ElMessage.success("班级添加成功");
         });
       }
       this.closeCreateClassDialog();

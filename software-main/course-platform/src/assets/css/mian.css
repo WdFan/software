@@ -73,7 +73,7 @@ a {
 }
 
 
-.specialDialog .el-dialog__header > button {
+.specialDialog .el-dialog__header>button {
   display: none;
 }
 
@@ -121,10 +121,7 @@ a {
   background-color: #fff;
 }
 
-.specialDialog.joinClassDialog
-  .dialog-body
-  .joinClassForm
-  .el-form-item__content {
+.specialDialog.joinClassDialog .dialog-body .joinClassForm .el-form-item__content {
   height: 32px;
   width: 100%;
   text-align: left;
@@ -244,7 +241,8 @@ a {
   display: none;
 }
 
-.warningDialog .el-dialog__body, .warningDialog .el-dialog__footer {
+.warningDialog .el-dialog__body,
+.warningDialog .el-dialog__footer {
   padding: 0;
   text-align: center;
 }
@@ -292,4 +290,76 @@ a {
 
 .index .nowrap {
   white-space: nowrap;
+}
+
+.personal,
+.personal .el-container,
+.personal .el-main>.el-tabs,
+.personal .el-main>.el-tabs>.el-tabs__content>div {
+  height: 100%;
+}
+
+.personal .personal_main {
+  height: calc(100% - 50px);
+  overflow-y: hidden;
+}
+
+.personal .el-main>.el-tabs>.el-tabs__content {
+  height: calc(100% - 30px);
+}
+
+.personal .el-main>.el-tabs>.is-left {
+  margin-right: 0;
+  width: 150px;
+  background-color: #fff;
+  padding: 10px;
+}
+
+.personal .el-main>.el-tabs>.is-left>.el-tabs__nav-wrap {
+  margin: 0;
+}
+
+.personal .el-main>.el-tabs .is-left .el-tabs__item {
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  color: #9b9b9b;
+  font-size: 16px;
+  margin-bottom: 10px;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  cursor: pointer;
+  border: 0;
+}
+
+.personal .el-main>.el-tabs .is-left .el-tabs__item:hover {
+  background-color: #edf4fe;
+  color: #5096f5;
+}
+
+.personal .el-main>.el-tabs .is-left .el-tabs__item.is-active {
+  color: #5096f5;
+  border-radius: 4px;
+  background-color: #edf4fe;
+}
+
+.personal .el-main>.el-tabs>.el-tabs__content {
+  background-color: var(--el-background-color-base);
+}
+
+.personal .el-main>.el-tabs>.el-tabs__content>div {
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.panle.person-info .el-form>.el-form-item>label {
+  color: #333333;
+  width: 90px;
+  padding: 0;
+}
+
+.panle.person-info .el-form>.el-form-item .el-input {
+  height: 40px;
+  width: 380px;
 }
