@@ -191,7 +191,7 @@ class savePersonInfoView(APIView):
         serializer = loginUserserializer(user)
         return Response({'code':'200','data':serializer.data})
 
-'''
+
 class editClassView(APIView):
      #编辑班级信息
      def put(self,request):
@@ -224,7 +224,7 @@ class editClassView(APIView):
          classes = banji.objects.all().filter(couid__in=ids)
          banjiserial = banjiserializer(classes, many=True)
          return Response({'code':200,"data":banjiserial.data})
-'''
+
 
 
 

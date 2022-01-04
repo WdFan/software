@@ -10,7 +10,7 @@ code data
 #editLesson: (lessonId, lessonForm) => {return axios.post('/api/editLesson/', {'lessonId': lessonId, 'lessonForm': lessonForm})},
 code data[1]
 
-editClass: (classId, classForm) => {return axios.post('/api/editClass/', {'classId': classId, 'classForm': classForm})},
+#editClass: (classId, classForm) => {return axios.post('/api/editClass/', {'classId': classId, 'classForm': classForm})},
 code data[1]
 
 quitClass: (username, classId) => {return axios.post('/api/quitclass/', {'username': username, 'classId': classId})},

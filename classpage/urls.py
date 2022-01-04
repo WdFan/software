@@ -34,6 +34,6 @@ urlpatterns = [
     path('savePersonInfo/',views.savePersonInfoView.as_view(),name = "savePersonInfo"),
 
     #编辑班级信息 put请求
-    #path('editClass/',views.editClassView.as_view(),name="editClass")
+    path('editClass/',views.editClassView.as_view(),name="editClass")
 
 ]
