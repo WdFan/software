@@ -241,7 +241,27 @@ class getClassInfoView(APIView):
         serializer = banjiserializer1(ban)
         return Response({'code':200,'data':serializer.data})
 
-
+class quitClass(APIView):
+    def post(self,request):
+        username = self.request.data['username']
+        classId = self.request.data['classId']
+        ban = banji.objects.all().filter(id=classId).first()
+        '''
+        serialzier = banjiserializer(ban)
+        student  = serialzier.data['student']
+        studentobjs = loginUser.objects.all().filter(id__in=student)
+        
+        if username not in student:
+            return Response({'code':400})
+        '''
+        student = loginUser.objects.all().filter(username=username).first()
+        if ban is None:
+            return Response({'code':400})
+        if student is None:
+            return Response({'code':400})
+        ban.student.remove(student)
+        banjis = banjiserializer1(student.banji, many=True)
+        return Response({'code':200,'data':banjis.data})
 
 
 

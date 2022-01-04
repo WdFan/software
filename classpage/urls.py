@@ -39,4 +39,7 @@ urlpatterns = [
     #得到班级信息
     path('getClassInfo/',views.getClassInfoView.as_view(),name="getClassInfo"),
 
+    #退出班级
+    path('quitClass/',views.quitClass.as_view(),name="quitClass")
+
 ]
