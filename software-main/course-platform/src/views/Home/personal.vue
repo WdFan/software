@@ -62,10 +62,9 @@ export default {
   },
   methods: {
     savePersonInfo() {
-      console.warn(this.personInfoForm);
       api.savePersonInfo(this.personInfoForm).then((res) => {
         if (res.data.code == 200) {
-          this.$store.state.user_info = res.data.data;
+          this.$store.commit('updateUser', res.data.data);
           ElMessage.success("本次修改已保存");
         } else {
           ElMessage.error("修改失败");
