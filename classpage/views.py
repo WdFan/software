@@ -189,9 +189,9 @@ class savePersonInfoView(APIView):
         user.stu_school = stu_school
         user.save()
         serializer = loginUserserializer(user)
-        return  Response({'code':'200','data':serializer.data})
- '''
- class editClassView(APIView):
+        return Response({'code':'200','data':serializer.data})
+'''
+class editClassView(APIView):
      #编辑班级信息
      def put(self,request):
          classId = self.request.data['classId']
@@ -200,10 +200,8 @@ class savePersonInfoView(APIView):
          year = classForm['year']
          season = classForm['season']
          color = classForm['color']
-         lessonId = classForm['lessonId'] m
-
+         lessonId = classForm['lessonId']
 '''
-
 
 
 
