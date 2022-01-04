@@ -257,7 +257,6 @@ class quitClass(APIView):
         serialzier = banjiserializer(ban)
         student  = serialzier.data['student']
         studentobjs = loginUser.objects.all().filter(id__in=student)
-        
         if username not in student:
             return Response({'code':400})
         '''
@@ -291,12 +290,16 @@ class deleteLesson(APIView):
         #课程编号
         lessonId = self.request.data['lessonId']
         cou = course.objects.all().filter(id=lessonId).first()
+        if cou is None:
+            return Response({'code':400})
         couserializer = courseserializer1(cou)
-        teacher = courseserializer['teacher']
+        teacher = couserializer.data['teacher']
         cou.delete()
         cous = course.objects.all().filter(teacher=teacher)
         #返回该课程的所有信息
-        #serializer =
+        serializer = courseserializer(cous,many=True)
+        return Response({'code':200,'data':serializer.data})
+
 
 
 

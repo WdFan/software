@@ -25,7 +25,7 @@ code studentList:[stuent_info1,stuent_info2,{},{}...]
 #deleteClass: (classId) => {return axios.post('/api/deleteClass/', {'classId': classId})},
 code data[1]
 
-deleteLesson: (lessonId) => {return axios.post('api/deleteLesson/', {'lessonId': lessonId})},
+#deleteLesson: (lessonId) => {return axios.post('api/deleteLesson/', {'lessonId': lessonId})},
 code data[1]
 删除课程要把课程里所有班级删除
 

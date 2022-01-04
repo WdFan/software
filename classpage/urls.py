@@ -42,6 +42,9 @@ urlpatterns = [
     #退出班级
     path('quitClass/',views.quitClass.as_view(),name="quitClass"),
 
+    #删除班级
     path('deleteClass/',views.deleteClassView.as_view(),name="deleteClass"),
 
+    # 删除课程
+    path('deleteLesson/', views.deleteLesson.as_view(), name="deleteLesson"),
 ]
