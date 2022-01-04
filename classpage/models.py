@@ -43,12 +43,8 @@ class banji(models.Model):
     def __str__(self):
         return self.name
 
-
-
-'''
-import random
-
-alphabet = 'ABCDEFGHIJKLMNOPQISTUVWXYZ'
-characters = ''.join(random.sample(alphabet, 5))
-print(characters)
-'''
+class message(models.Model):
+    createTime = models.IntegerField(default=0)
+    title = models.CharField(max_length=50,blank=True)
+    msg = models.CharField(max_length=200,blank=True)
+    banji = models.ForeignKey(banji,null=True,blank=True,on_delete=models.CASCADE,related_name='message')

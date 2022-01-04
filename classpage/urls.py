@@ -47,4 +47,7 @@ urlpatterns = [
 
     # 删除课程
     path('deleteLesson/', views.deleteLesson.as_view(), name="deleteLesson"),
+
+    #获取信息
+    path('getClassMessage/', views.getClassMessageView.as_view(), name="getClassMessage"),
 ]

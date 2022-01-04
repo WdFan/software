@@ -1,6 +1,6 @@
 from classpage.models import banji,course
 from rest_framework import serializers
-from classpage.models import banji,course
+from classpage.models import banji,course,message
 from login.serializer import loginUserserializer,loginUserserializer1
 #创建序列器
 class banjiserializer(serializers.ModelSerializer):
@@ -60,3 +60,7 @@ class banjiserializer3(serializers.ModelSerializer):
         model = banji
         fields = ['id','course','name','year','season','couid','color','num','code']
 
+class messageserializer(serializers.ModelSerializer):
+    class Meta:
+        model = message
+        fields =['createTime','title','msg']

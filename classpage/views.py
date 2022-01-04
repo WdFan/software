@@ -7,8 +7,9 @@ from login.serializer import loginUserserializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from classpage.serializer import banjiserializer,courseserializer,banjiserializer1,banjiserializer2,courseserializer1
+from classpage.serializer import messageserializer
 from login.models import loginUser
-from classpage.models import banji,course
+from classpage.models import banji,course,message
 import json
 from collections import OrderedDict
 import random
@@ -299,6 +300,17 @@ class deleteLesson(APIView):
         #返回该课程的所有信息
         serializer = courseserializer(cous,many=True)
         return Response({'code':200,'data':serializer.data})
+
+class getClassMessageView(APIView):
+    def post(self,request):
+        #获取classId
+        classId = self.request.data['classId']
+        ban = banji.objects.all().filter(id=classId).first()
+        if ban is None:
+            return Response({'code':400})
+        serializer = messageserializer(ban.message,many=True)
+        return Response({'code':200,'data':serializer.data})
+
 
 
 
