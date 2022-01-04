@@ -29,10 +29,10 @@ class LoginView(APIView):
 #登陆接口
 class RegisterView(APIView):
     def post(self,request):
-        postBody = request.body
-        info = json.loads(postBody)
-        username = info['username']
-        password = info['password']
+        #postBody = request.body
+        #info = json.loads(postBody)
+        username = self.request.data['username']
+        password = self.request.data['password']
         #username = request.POST.get('username')
         #password = request.POST.get('password')
         #user_type = request.POST.get('user_type')

@@ -17,14 +17,14 @@ import os
 from dbconn import getconn
 cur = os.path.abspath(os.path.dirname(os.getcwd()))
 
-alphabet = 'ABCDEFGHIJKLMNOPQISTUVWXYZ'
-characters = ''.join(random.sample(alphabet, 5))
+
 
 
 class createCourseView(APIView):
     '''创建课程'''
     def post(self,request):
         #数据提交成功
+
         serializer = courseserializer(data=self.request.data)
         if serializer.is_valid():
             serializer.save()
@@ -42,6 +42,8 @@ class createBanjiView(APIView):
     '''创建班级'''
     def post(self,request):
         #创建班级
+        alphabet = 'ABCDEFGHIJKLMNOPQISTUVWXYZ'
+        characters = ''.join(random.sample(alphabet, 5))
         serializer = banjiserializer(data=self.request.data)
         if serializer.is_valid():
             serializer.save()
@@ -87,6 +89,7 @@ class getbanjiListView(APIView):
 
 class joinBanjiView(APIView):
     '''用户提交邀请码，加入到班级中'''
+    '''用户提交邀请码，加入到班级中'''
     def post(self,request):
         #用户名称
         username  = self.request.data['username']
@@ -101,11 +104,15 @@ class joinBanjiView(APIView):
         if banjiobj is None:
             return Response({'error':'该班级对象不存在'})
         serializer = banjiserializer(banjiobj)
-        banjiobj.student.add(studentobj)
-        #if serializer.is_valid():
-        #    serializer.instance.student.add(studentobj)
-        #    serializer.save()
-        banjiobj.save()
+        couserializer = courseserializer1(banjiobj.course)
+        banjiobj.num = len(serializer.data['student'])
+        teacher = couserializer.data['teacher']
+
+        if username!= teacher:
+            banjiobj.student.add(studentobj)
+            banjiobj.num = banjiobj.num+1
+            banjiobj.save()
+
         student = loginUser.objects.all().filter(username=username).first()
         banjis = banjiserializer1(student.banji, many=True)
         return Response({'code':200,'data':banjis.data})
@@ -275,12 +282,21 @@ class deleteClassView(APIView):
         ban.delete()
         #返回教师的所有班级找到所有班级
         cous = course.objects.all().filter(teacher=teacher)
-        data = []
-        for cou in cous:
-            banjis = banjiserializer1(cou.banji,many=True)
-            for d in banjis.data:
-                data.append(d)
-        return Response({'code': 200, 'data': data})
+        serial = courseserializer(cous,many=True)
+        return Response({'code': 200, 'data': serial.data})
+
+#删除课程
+class deleteLesson(APIView):
+    def post(self,request):
+        #课程编号
+        lessonId = self.request.data['lessonId']
+        cou = course.objects.all().filter(id=lessonId).first()
+        couserializer = courseserializer1(cou)
+        teacher = courseserializer['teacher']
+        cou.delete()
+        cous = course.objects.all().filter(teacher=teacher)
+        #返回该课程的所有信息
+        #serializer =
 
 
 

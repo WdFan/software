@@ -53,4 +53,10 @@ class banjiserializer2(serializers.ModelSerializer):
         model = banji
         fields = ['student']
 
+#班级中不包含学生数据
+class banjiserializer3(serializers.ModelSerializer):
+    course = courseserializer1(required=False)
+    class Meta:
+        model = banji
+        fields = ['id','course','name','year','season','couid','color','num','code']
 
