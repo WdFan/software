@@ -16,7 +16,7 @@
               <h1>个人信息</h1>
               <el-form>
                 <el-form-item label="用户">
-                  <el-input v-model="personInfoForm.username"></el-input>
+                  <el-input disabled v-model="personInfoForm.username"></el-input>
                 </el-form-item>
                 <el-form-item label="姓名">
                   <el-input v-model="personInfoForm.stu_name"></el-input>

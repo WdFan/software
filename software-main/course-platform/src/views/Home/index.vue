@@ -388,8 +388,15 @@ export default {
     doCreateLesson() {
       if (this.editLessonId) {
         api.editLesson(this.editLessonId, this.createLessonForm).then((res) => {
-          console.log(res);
-          ElMessage.success("编辑课程成功");
+          // console.warn(res);
+          if (res.data.code == 200) {
+            this.$store.state.userTeachData = res.data.data.sort((l, r) => {
+              return r.id - l.id;
+            });
+            ElMessage.success("编辑课程成功");
+          } else {
+            ElMessage.error("编辑课程失败");
+          }
         });
       } else {
         api
@@ -414,14 +421,26 @@ export default {
     doCreateClass() {
       if (this.editClassId) {
         api.editClass(this.editClassId, this.createClassForm).then((res) => {
-          console.log(res);
-          ElMessage.success("编辑班级成功");
+          if (res.data.code == 200) {
+            ElMessage.success("编辑班级成功");
+            this.$store.state.userTeachData = res.data.data.sort((l, r) => {
+              return r.id - l.id;
+            });
+          } else {
+            ElMessage.error("编辑班级失败");
+          }
         });
       } else {
         this.createClassForm.color = "style" + Math.floor(Math.random() * 4);
         api.createClass(this.createClassForm).then((res) => {
-          console.log(res);
-          ElMessage.success("班级添加成功");
+          if (res.data.code == 200) {
+            ElMessage.success("班级创建成功");
+            this.$store.state.userTeachData = res.data.data.sort((l, r) => {
+              return r.id - l.id;
+            });
+          } else {
+            ElMessage.error("班级创建失败");
+          }
         });
       }
       this.closeCreateClassDialog();
@@ -445,7 +464,7 @@ export default {
       this.createClassForm.lessonId = classData.couid;
       this.createClassButton = null;
       this.createClassDialog = true;
-      console.warn(classData);
+      // console.warn(classData);
     },
     quitClass(classInfo) {
       this.warningDialog.type = 0;
