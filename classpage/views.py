@@ -240,7 +240,7 @@ class getClassInfoView(APIView):
             return Response({'code':400})
         serializer = banjiserializer1(ban)
         return Response({'code':200,'data':serializer.data})
-
+#退出班级
 class quitClass(APIView):
     def post(self,request):
         username = self.request.data['username']
@@ -262,7 +262,7 @@ class quitClass(APIView):
         ban.student.remove(student)
         banjis = banjiserializer1(student.banji, many=True)
         return Response({'code':200,'data':banjis.data})
-
+#删除班级
 class deleteClassView(APIView):
     def post(self,request):
         classId = self.request.data['classId']

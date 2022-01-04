@@ -22,7 +22,7 @@ code data[1]
 #getClassStudentInfo: (classId) => {return axios.post('/api/getclassStudentList/', {'classId': classId})},
 code studentList:[stuent_info1,stuent_info2,{},{}...]
 
-deleteClass: (classId) => {return axios.post('/api/deleteClass/', {'classId': classId})},
+#deleteClass: (classId) => {return axios.post('/api/deleteClass/', {'classId': classId})},
 code data[1]
 
 deleteLesson: (lessonId) => {return axios.post('api/deleteLesson/', {'lessonId': lessonId})},
