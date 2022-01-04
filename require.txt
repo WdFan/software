@@ -3,6 +3,9 @@
 #老师创建班级api返回data放老师最新班级列表
 注：更改课程班级信息的最后都返回最新列表数据[1]
 
+#getClassInfo: (classId) => { return axios.post('/api/getClassInfo/', { 'classId': classId }) }
+code data
+
 #savePersonInfo: (personInfoForm) => {return axios.post('/api/savePersonInfo/', { 'personInfoForm': personInfoForm})}
 personInfoForm:{username: 'zhoubo', stu_id: 'XS21033159', stu_name: '周博', stu_school: null}
 code data

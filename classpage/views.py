@@ -54,13 +54,18 @@ class createBanjiView(APIView):
             serializer.save()
             #查找到teacher，查找该teacher的所有课程
             courses = course.objects.filter(teacher=teacher)
+            '''
             ids = []
             for c in courses:
                 ids.append(c.id)
-
             classes = banji.objects.all().filter(couid__in = ids)
-            banjiserial = banjiserializer(classes,many=True)
+            banjiserial = banjiserializer1(classes,many=True)
             return Response({'code':200,'data':banjiserial.data})
+            '''
+            if course is None:
+                return {'code': 400}
+            serializer = courseserializer(courses, many=True)
+            return Response({'code':200,'data':serializer.data})
         else:
             return Response({'code':400})
 
@@ -218,12 +223,10 @@ class editClassView(APIView):
          teacher = lesson.teacher
          #查找所有班级
          courses = course.objects.filter(teacher=teacher)
-         ids = []
-         for c in courses:
-             ids.append(c.id)
-         classes = banji.objects.all().filter(couid__in=ids)
-         banjiserial = banjiserializer(classes, many=True)
-         return Response({'code':200,"data":banjiserial.data})
+         if course is None:
+             return {'message': '该用户未创建课程'}
+         serializer = courseserializer(courses, many=True)
+         return Response({'code':200,"data":serializer.data})
 
 
 class getClassInfoView(APIView):
@@ -233,7 +236,7 @@ class getClassInfoView(APIView):
         ban = banji.objects.all().filter(id=classId).first()
         if ban is None:
             return Response({'code':400})
-        serializer = banjiserializer(ban)
+        serializer = banjiserializer1(ban)
         return Response({'code':200,'data':serializer.data})
 
 
