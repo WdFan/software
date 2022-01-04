@@ -24,24 +24,24 @@ const routes = [
       {
         path: 'index',
         name: 'index',
-        component: () => import("../views/Home/index/index.vue")
+        component: () => import("../views/Home/index.vue")
       },
       {
         path: 'personal',
         name: 'personal',
-        component: () => import("../views/Home/index/personal.vue")
+        component: () => import("../views/Home/personal.vue")
       },
       {
         path: 'studentLog/:id',
         name: 'studentLog',
         props: true,
-        component: () => import("../views/Home/index/studentLog.vue")
+        component: () => import("../views/Home/studentLog.vue")
       },
       {
         path: 'teacherLog/:id',
         name: 'teacherLog',
         props: true,
-        component: () => import("../views/Home/index/teacherLog.vue")
+        component: () => import("../views/Home/TeacherLog/teacherLog.vue")
       }
     ]
   },

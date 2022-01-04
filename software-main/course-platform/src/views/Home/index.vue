@@ -229,9 +229,9 @@
 
 <script>
 import { ElMessage } from "element-plus";
-import api from "../../../api/api";
-import StudentLessonCard from "../../../component/StudentLessonCard.vue";
-import TeacherContainer from "../../../component/TeacherContainer.vue";
+import api from "../../api/api";
+import StudentLessonCard from "../../component/StudentLessonCard.vue";
+import TeacherContainer from "../../component/TeacherContainer.vue";
 export default {
   components: { TeacherContainer, StudentLessonCard },
   name: "index",

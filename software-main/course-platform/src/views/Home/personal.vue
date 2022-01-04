@@ -51,7 +51,7 @@
 
 <script>
 import { ElMessage } from "element-plus";
-import api from "../../../api/api";
+import api from "../../api/api";
 
 export default {
   name: "personal",
