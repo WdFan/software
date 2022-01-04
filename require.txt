@@ -29,6 +29,6 @@ code data[1]
 code data[1]
 删除课程要把课程里所有班级删除
 
-getClassMessage: (classId) => {return axios.post('/api/getClassMessage/', {'classId': classId})}
+#getClassMessage: (classId) => {return axios.post('/api/getClassMessage/', {'classId': classId})}
 code messageList[{createTime: Number, title: String, msg: }, {createTime: Number, title: String, msg: }, ...]
 createTime存timestamp时间戳 1638349200 1638358225 1640864462
