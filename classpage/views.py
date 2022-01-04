@@ -263,6 +263,25 @@ class quitClass(APIView):
         banjis = banjiserializer1(student.banji, many=True)
         return Response({'code':200,'data':banjis.data})
 
+class deleteClassView(APIView):
+    def post(self,request):
+        classId = self.request.data['classId']
+        ban = banji.objects.all().filter(id=classId).first()
+        if ban is None:
+            return Response({'code':400})
+        serializer =  banjiserializer1(ban)
+        teacher = serializer.data['course']['teacher']
+        #删除ban
+        ban.delete()
+        #返回教师的所有班级找到所有班级
+        cous = course.objects.all().filter(teacher=teacher)
+        data = []
+        for cou in cous:
+            banjis = banjiserializer1(cou.banji,many=True)
+            for d in banjis.data:
+                data.append(d)
+        return Response({'code': 200, 'data': data})
+
 
 
 
