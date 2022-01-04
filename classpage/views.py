@@ -60,9 +60,9 @@ class createBanjiView(APIView):
 
             classes = banji.objects.all().filter(couid__in = ids)
             banjiserial = banjiserializer(classes,many=True)
-            return Response({'code':200,'msg':banjiserial.data})
+            return Response({'code':200,'data':banjiserial.data})
         else:
-            return Response({'code':400,'msg':'数据非法'})
+            return Response({'code':400})
 
 
 #得到所交的班级
@@ -190,6 +190,7 @@ class savePersonInfoView(APIView):
         user.save()
         serializer = loginUserserializer(user)
         return Response({'code':'200','data':serializer.data})
+
 '''
 class editClassView(APIView):
      #编辑班级信息
@@ -201,7 +202,31 @@ class editClassView(APIView):
          season = classForm['season']
          color = classForm['color']
          lessonId = classForm['lessonId']
+         #找到班级进行更新
+         ban = banji.objects.all().filter(id=classId).first()
+         if ban is None:
+             return Response({'code':400})
+         ban.name = name
+         ban.year = year
+         ban.season = season
+         ban.color = color
+         ban.save()
+         #查找教师
+         lesson = course.objects.all().filter(id=lessonId).first()
+         if lesson is None:
+             return Response({'code':400})
+         teacher = lesson.teacher
+         #查找所有班级
+         courses = course.objects.filter(teacher=teacher)
+         ids = []
+         for c in courses:
+             ids.append(c.id)
+         classes = banji.objects.all().filter(couid__in=ids)
+         banjiserial = banjiserializer(classes, many=True)
+         return Response({'code':200,"data":banjiserial.data})
 '''
+
+
 
 
 
