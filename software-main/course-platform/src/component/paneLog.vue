@@ -42,7 +42,7 @@ export default {
     return {};
   },
   mounted() {
-    console.log(this.messageList);
+    // console.log(this.messageList);
   },
 };
 </script>
