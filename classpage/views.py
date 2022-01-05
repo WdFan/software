@@ -313,9 +313,21 @@ class getClassMessageView(APIView):
         serializer = messageserializer(ban.message,many=True)
         return Response({'code':200,'data':serializer.data})
 
-
-
-
+#创建消息
+class addMessageView(APIView):
+    def post(self,request):
+        classId = self.request.data['classId']
+        messageForm = self.request.data['messageForm']
+        createTime = messageForm['createTime']
+        title = messageForm['title']
+        msg = messageForm['msg']
+        ban = banji.objects.all().filter(id=classId).first()
+        if ban is None:
+            return Response({'code':400})
+        Msg = message(createTime=createTime,title=title,msg=msg,banji=ban)
+        Msg.save()
+        serilaizer = messageserializer(ban.message,many=True)
+        return Response({'code':200,'data':serilaizer.data})
 
 
 

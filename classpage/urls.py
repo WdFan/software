@@ -50,4 +50,6 @@ urlpatterns = [
 
     #获取信息
     path('getClassMessage/', views.getClassMessageView.as_view(), name="getClassMessage"),
+
+    path('addMessage/',views.addMessageView.as_view(),name="addMessage")
 ]
