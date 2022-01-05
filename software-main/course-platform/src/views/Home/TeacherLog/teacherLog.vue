@@ -24,8 +24,22 @@
 
       <el-main>
         <el-tabs class="mainTab" v-model="activePane">
-          <el-tab-pane label="教学日志" name="pane-log">日志</el-tab-pane>
-          <el-tab-pane label="成员管理" name="pane-manage">成员</el-tab-pane>
+          <el-tab-pane label="教学日志" name="pane-log" class="log">
+            <div class="radioTab">
+              <div class="buttonGroup">
+                <span
+                  ><el-icon><promotion /></el-icon>发布任务</span
+                >
+              </div>
+            </div>
+            <PaneLog v-if="messageInfo" :messageList="messageInfo"></PaneLog>
+          </el-tab-pane>
+          <el-tab-pane label="成员管理" name="pane-manage">
+            <PaneManage v-if="studentList" :userList="studentList"></PaneManage>
+          </el-tab-pane>
+          <el-tab-pane label="签到信息" name="pane-sign">
+            <PaneSign v-if="signInfo" :signList="signInfo"></PaneSign>
+          </el-tab-pane>
         </el-tabs>
       </el-main>
     </el-container>
@@ -34,6 +48,9 @@
 
 <script>
 import api from "../../../api/api";
+import PaneLog from "../../../component/paneLog.vue";
+import PaneManage from "./paneManage.vue";
+import PaneSign from "./paneSign.vue";
 
 export default {
   name: "teacherLog",
@@ -44,6 +61,7 @@ export default {
       activePane: null,
       messageInfo: null,
       studentList: null,
+      signInfo: null,
     };
   },
   watch: {
@@ -51,15 +69,20 @@ export default {
       if (newPane == "pane-log" && this.messageInfo === null) {
         api.getClassMessage(this.id).then((res) => {
           if (res.data.code == 200) {
-            this.messageInfo = res.data.data;
-            console.log(this.messageInfo)
-            console.log(this.messageInfo.length)
+            this.messageInfo = res.data.data.sort((l, r) => {
+              return r.createTime - l.createTime;
+            });
           }
         });
       } else if (newPane == "pane-manage" && this.studentList === null) {
         api.getClassStudentInfo(this.id).then((res) => {
           this.studentList = res.data.studentList;
-          console.log(this.studentList)
+        });
+      } else if (newPane == "pane-sign" && this.signInfo === null) {
+        api.getDbInfo().then((res) => {
+          if (res.data.code == 200) {
+            this.signInfo = res.data.data;
+          }
         });
       }
     },
@@ -68,13 +91,14 @@ export default {
     api.getClassInfo(this.id).then((res) => {
       if (res.data.code == 200) {
         this.classInfo = res.data.data;
-        console.warn(this.classInfo);
+        // console.warn(this.classInfo);
       }
     });
   },
   mounted() {
     this.activePane = "pane-log";
   },
+  components: { PaneLog, PaneManage, PaneSign },
 };
 </script>
 
@@ -130,5 +154,27 @@ export default {
 
 .teacherLog .el-tabs.mainTab {
   height: 100%;
+  overflow: hidden;
+}
+
+.teacherLog .radioTab {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  color: #4f95f5;
+  min-width: 1090px;
+  padding-top: 30px;
+  padding-left: 20px;
+  z-index: 9;
+  background-color: #f5f5f5;
+  width: 100%;
+  position: relative;
+  cursor: pointer;
 }
 </style>

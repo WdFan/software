@@ -17,7 +17,8 @@ const api = {
   deleteLesson: (lessonId) => { return axios.post('/api/deleteLesson/', { 'lessonId': lessonId }) },
   getClassMessage: (classId) => { return axios.post('/api/getClassMessage/', { 'classId': classId }) },
   savePersonInfo: (personInfoForm) => { return axios.post('/api/savePersonInfo/', { 'personInfoForm': personInfoForm }) },
-  getClassInfo: (classId) => { return axios.post('/api/getClassInfo/', { 'classId': classId }) }
+  getClassInfo: (classId) => { return axios.post('/api/getClassInfo/', { 'classId': classId }) },
+  getDbInfo: () => { return axios.post('/api/getdbinfo/') }
 }
 
 export default api;

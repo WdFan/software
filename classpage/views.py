@@ -267,6 +267,8 @@ class quitClass(APIView):
         if student is None:
             return Response({'code':400})
         ban.student.remove(student)
+        ban.num = ban.num-1
+        ban.save()
         banjis = banjiserializer1(student.banji, many=True)
         return Response({'code':200,'data':banjis.data})
 #删除班级
