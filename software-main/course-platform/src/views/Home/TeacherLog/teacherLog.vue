@@ -26,7 +26,7 @@
         <el-tabs class="mainTab" v-model="activePane">
           <el-tab-pane label="教学日志" name="pane-log" class="log">
             <div class="radioTab">
-              <div class="buttonGroup">
+              <div class="buttonGroup" @click="addMessage">
                 <span
                   ><el-icon><promotion /></el-icon>发布任务</span
                 >
@@ -43,10 +43,22 @@
         </el-tabs>
       </el-main>
     </el-container>
+
+    <el-dialog
+      v-model="addMessageDialog"
+      title="发布任务"
+      center
+      @closed="closeMessageDialog"
+    >
+      <el-input v-model="messageForm.title" label="标题"></el-input>
+      <VueVditor v-model="messageForm.msg" class="editor"></VueVditor>
+      <el-button type="primary" @click="clickSubmit">提交</el-button>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import { ElMessage } from "element-plus";
 import api from "../../../api/api";
 import PaneLog from "../../../component/paneLog.vue";
 import PaneManage from "./paneManage.vue";
@@ -62,6 +74,12 @@ export default {
       messageInfo: null,
       studentList: null,
       signInfo: null,
+      addMessageDialog: false,
+      messageForm: {
+        title: "",
+        msg: "",
+        createTime: null,
+      },
     };
   },
   watch: {
@@ -99,6 +117,30 @@ export default {
     this.activePane = "pane-log";
   },
   components: { PaneLog, PaneManage, PaneSign },
+  methods: {
+    addMessage() {
+      this.addMessageDialog = true;
+    },
+    closeMessageDialog() {
+      this.addMessageDialog = false;
+      this.messageForm.title = "";
+      this.messageForm.msg = "";
+      this.createTime = null;
+    },
+    clickSubmit() {
+      this.messageForm.createTime = this.$dayjs().unix();
+      api.addMessage(this.id, this.messageForm).then((res) => {
+        if (res.data.code == 200) {
+          ElMessage.success('任务发布成功')
+          this.messageInfo = res.data.data.sort((l, r) => {
+            return r.createTime - l.createTime;
+          });
+        } else {
+          ElMessage.error('任务发布失败')
+        }
+      });
+    },
+  },
 };
 </script>
 

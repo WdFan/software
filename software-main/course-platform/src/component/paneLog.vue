@@ -142,6 +142,7 @@ export default {
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
+  text-align: left;
 }
 
 .activity__wrap .activity-info h2 {

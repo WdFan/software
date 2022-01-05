@@ -8,10 +8,14 @@
       <p>暂无学生</p>
     </div>
     <div class="sign-list" v-else>
-        <el-table :data="signList" border style="width:100%">
+      <el-table :data="signList" border style="width: 100%">
         <el-table-column prop="sid" label="学号" sortable></el-table-column>
         <el-table-column prop="sname" label="姓名"></el-table-column>
-        <el-table-column prop="sign_time" label="签到时间" sortable></el-table-column>
+        <el-table-column
+          prop="sign_time"
+          label="签到时间"
+          sortable
+        ></el-table-column>
       </el-table>
     </div>
   </div>

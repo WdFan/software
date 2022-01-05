@@ -18,7 +18,8 @@ const api = {
   getClassMessage: (classId) => { return axios.post('/api/getClassMessage/', { 'classId': classId }) },
   savePersonInfo: (personInfoForm) => { return axios.post('/api/savePersonInfo/', { 'personInfoForm': personInfoForm }) },
   getClassInfo: (classId) => { return axios.post('/api/getClassInfo/', { 'classId': classId }) },
-  getDbInfo: () => { return axios.post('/api/getdbinfo/') }
+  getDbInfo: () => { return axios.post('/api/getdbinfo/') },
+  addMessage: (classId, messageForm) => {return axios.post('/api/addMessage/', {'classId': classId, 'messageForm': messageForm})}
 }
 
 export default api;

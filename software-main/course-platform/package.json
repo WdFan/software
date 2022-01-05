@@ -13,8 +13,10 @@
     "core-js": "^3.6.5",
     "dayjs": "^1.10.7",
     "element-plus": "^1.0.2-beta.28",
+    "vditor": "^3.8.10",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
+    "vue-vditor": "^0.0.7",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
