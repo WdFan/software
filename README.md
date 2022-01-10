@@ -4,7 +4,14 @@
 <br>
 
 ## 目录结构
-[]!(./img/dir.png)
+<img src=img/dir.png width=50% />
+
+software-main目录下为前端代码
+
+facereco目录下为人脸识别客户端
+
+其余目录为后端django模块
+
 
 <br>
 
@@ -83,6 +90,7 @@ vue-cli-service serve
 ```python
 python signIn.py
 ```
-由于人脸识别照片占用空间较大用户已清空  
+由于人脸识别照片占用空间较大用户已清空
+
 请在客户端中自行创建用户
 <br/>
