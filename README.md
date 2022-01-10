@@ -54,7 +54,7 @@ git clone https://github.com/Yin-Hongwei/music-website.git
 pip install -r requirements.txt
 ```
 
-进入software-main/course-platform目录安装前端依赖
+进入/software-main/course-platform目录安装前端依赖
 ```js
 cd software-main/course-platform
 npm insatll
@@ -99,17 +99,17 @@ python signIn.py
 
 ## 人脸识别客户端使用
 
-<img src=img/face1.png width=50% /><br/>
+<img src=img/face1.png width=60% /><br/>
 1.点击新增用户
 
 <br/>
 
-<img src=img/face2.png width=50% /><br/>
+<img src=img/face2.png width=60% /><br/>
 2.进入用户注册页面，点击注册新用户
 
 <br/>
 
-<img src=img/face3.png width=50% /><br/>
+<img src=img/face3.png width=60% /><br/>
 3.输入学号，姓名
 ```diff
 - 注意学号要求13位
@@ -118,27 +118,27 @@ python signIn.py
 
 <br/>
 
-<img src=img/face4.png width=50% /><br/>
+<img src=img/face4.png width=60% /><br/>
 4.点击开始采集按钮
 
 <br/>
 
-<img src=img/face5.png width=50% /><br/>
+<img src=img/face5.png width=60% /><br/>
 5.当人脸追踪红框出现时，点击拍摄，拍摄完成后，点击结束人脸采集
 
 <br/>
 
-<img src=img/face6.png width=50% /><br/>
+<img src=img/face6.png width=60% /><br/>
 6.点击上传数据，上传数据后点击退出按钮，返回主页面
 
 <br/>
 
-<img src=img/face7.png width=50% /><br/>
+<img src=img/face7.png width=60% /><br/>
 7.主页面点击用户管理按钮进入管理界面，在管理界面点击开始训练，等待训练完成，训练完成后退出
 
 <br/>
 
-<img src=img/face8.png width=50% /><br/>
+<img src=img/face8.png width=60% /><br/>
 8.在主页面勾选人脸识别后开启摄像头，即可开始人脸识别，人脸识别成功后会在数据库中写入识别时间。
 ```diff
 - 若摄像头无法打开，可退出程序后重新进入，可能出现摄像头被注册进程抢占情况
