@@ -47,13 +47,14 @@ IDE：VSCode
 git clone https://github.com/Yin-Hongwei/music-website.git
 ```
 
-#### 2、下载项目依赖
+#### 2、安装项目依赖
 
-项目根目录下使用conda创建的python3.6.2环境下执行
+进入项目根目录，使用conda创建的python3.6.2环境安装后端，人脸识别客户端依赖
 ```python
 pip install -r requirements.txt
 ```
 
+进入software-main/course-platform目录安装前端依赖
 ```js
 cd software-main/course-platform
 npm insatll
