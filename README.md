@@ -44,7 +44,7 @@ IDE：VSCode
 #### 1、下载项目到本地
 
 ```bash
-git clone https://github.com/Yin-Hongwei/music-website.git
+git clone https://github.com/WdFan/software.git
 ```
 
 #### 2、安装项目依赖
